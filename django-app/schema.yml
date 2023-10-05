@@ -1,0 +1,40 @@
+openapi: 3.0.3
+info:
+  title: Api Autoatendimento Lanchonete
+  version: 1.0.0
+  description: Api de Autoatendimento de lanchones - Fiap Pos-tech
+paths:
+  /api/cliente/:
+    get:
+      operationId: cliente_retrieve
+      description: Api cliente
+      tags:
+      - cliente
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          description: No response body
+    post:
+      operationId: cliente_create
+      description: Api cliente
+      tags:
+      - cliente
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          description: No response body
+components:
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: sessionid
