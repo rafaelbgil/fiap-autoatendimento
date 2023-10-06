@@ -1,27 +1,45 @@
 from django.shortcuts import render, HttpResponse
-from src.domain.entities.Pedido import Pedido
-from rest_framework.decorators import api_view
+from ddd.domain.entities.ClienteFactory  import ClienteFactory
+from rest_framework.views import APIView
 from .models import Cliente
 from .serializers import ClienteSerializer
 from rest_framework.response import Response
+from rest_framework import status
+from rest_framework import generics
+from rest_framework.views import APIView
+from drf_spectacular.utils import extend_schema
+import json
 
-# Create your views here.
-@api_view(['GET', 'POST'])
-def cliente(request):
+
+class ClienteList(APIView):
     """
-    Api cliente
+    Api para gerenciamento de clientes
     """
-    if request.method == 'GET':
+    queryset = Cliente.objects.all()
+    serializer_class = ClienteSerializer
+
+   
+    def get(self, request, format=None):
         """
-        parametros: teste
+        Visualiza os usuarios cadastrados
         """
-        print('passou')
         clientes = Cliente.objects.all()
-        serializer = ClienteSerializer(clientes, many=True)
+        serializer = ClienteSerializer(data=clientes, many=True)
+        serializer.is_valid()
         return Response(serializer.data)
+
     
-    if request.method == 'POST':
+    def post(self, request, format=None):
+        """
+        Cadastra novo usuario
+        """
         serializer = ClienteSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
+        serializer.is_valid()
+        try:
+            cliente = ClienteFactory.fromDict(serializer.data)
+        except:
+            return Response(data={'status' : 'Erro', 'motivo' : 'E-mail inválido'}, status=status.HTTP_400_BAD_REQUEST)
+        serializer.create(serializer.data)
         return Response(serializer.data)
+
+    
