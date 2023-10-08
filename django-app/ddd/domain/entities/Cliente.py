@@ -1,5 +1,3 @@
-import re
-
 class Cliente():
     nome: str = None
     email: str = None

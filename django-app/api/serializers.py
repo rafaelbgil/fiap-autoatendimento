@@ -1,6 +1,5 @@
 from rest_framework import serializers
-from .models import Cliente
-
+from .models import Cliente, Categoria
 
 
 class ClienteSerializer(serializers.Serializer):
@@ -11,3 +10,13 @@ class ClienteSerializer(serializers.Serializer):
    
     def create(self, validated_data):
         return Cliente.objects.create(**validated_data)
+    
+
+class CategoriaSerializer(serializers.Serializer):
+    id = serializers.IntegerField(read_only=True)
+    nome = serializers.CharField(max_length=40)
+
+    def create(self, validated_data):
+        return Categoria.objects.create(**validated_data)
+    
+    

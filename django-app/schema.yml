@@ -4,13 +4,56 @@ info:
   version: 1.0.0
   description: Api de Autoatendimento de lanchones - Fiap Pos-tech
 paths:
+  /api/categoria/:
+    get:
+      operationId: categoria_list
+      description: Api para inclusao de algo
+      tags:
+      - categoria
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Categoria'
+          description: ''
+    post:
+      operationId: categoria_create
+      tags:
+      - categoria
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Categoria'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Categoria'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Categoria'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Categoria'
+          description: ''
   /api/cliente/:
     get:
       operationId: cliente_list
-      description: |-
-        Api que retorna os clientes
-
-        teste
+      description: Visualiza os usuarios cadastrados
       tags:
       - cliente
       security:
@@ -28,10 +71,7 @@ paths:
           description: ''
     post:
       operationId: cliente_create
-      description: |-
-        Api que retorna os clientes
-
-        teste
+      description: Cadastra novo usuario
       tags:
       - cliente
       requestBody:
@@ -51,7 +91,30 @@ paths:
       - basicAuth: []
       - {}
       responses:
-        '201':
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cliente'
+          description: ''
+  /api/cliente/{uuid}/:
+    get:
+      operationId: cliente_retrieve
+      description: Visualiza de usuario selecionado pelo {uuid}
+      parameters:
+      - in: path
+        name: uuid
+        schema:
+          type: string
+        required: true
+      tags:
+      - cliente
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
           content:
             application/json:
               schema:
@@ -204,6 +267,18 @@ paths:
           description: ''
 components:
   schemas:
+    Categoria:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        nome:
+          type: string
+          maxLength: 40
+      required:
+      - id
+      - nome
     Cliente:
       type: object
       properties:
