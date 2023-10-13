@@ -1,5 +1,6 @@
 from rest_framework.views import APIView
 from api.models import Categoria
+from src.adapters.django_orm.CategoriaDaoOrm import CategoriaDaoOrm
 from api.serializers import CategoriaSerializer
 from rest_framework.response import Response
 from rest_framework import status
@@ -15,9 +16,9 @@ class CategoriaDetalhesView(APIView):
         Obtém dados de categoria selecionada
         """
         try:
-            categoria = Categoria.objects.get(id=id)
-        except:
-            return Response(data={'status': 'erro', 'descricao': 'Não foi possível localizar a categoria informada para remoção'}, status=status.HTTP_404_NOT_FOUND)
+            categoria = CategoriaDaoOrm().getCategoria(id=id)
+        except Exception as erro:
+            return Response(data={'status': 'erro', 'descricao': erro.__str__()}, status=status.HTTP_404_NOT_FOUND)
 
         serializer = CategoriaSerializer(instance=categoria)
         return Response(serializer.data, status=status.HTTP_200_OK)

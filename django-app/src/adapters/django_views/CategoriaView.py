@@ -1,4 +1,5 @@
 from src.domain.entities.CategoriaFactory import CategoriaFactory
+from src.adapters.django_orm.CategoriaDaoOrm import CategoriaDaoOrm
 from rest_framework.views import APIView
 from api.models import Categoria
 from api.serializers import CategoriaSerializer
@@ -16,7 +17,7 @@ class CategoriaView(APIView):
         """
         Api para listar categorias
         """
-        categorias = Categoria.objects.all()
+        categorias = CategoriaDaoOrm().listCategoria()
         serializer = CategoriaSerializer(data=categorias, many=True)
         serializer.is_valid()
         return Response(serializer.data, status=status.HTTP_200_OK)
@@ -27,7 +28,7 @@ class CategoriaView(APIView):
         Api para adicionar categoria
         """
         try:
-            CategoriaFactory.fromDict(request.data)
+           categoria =  CategoriaFactory.fromDict(request.data)
         except Exception as erro:
             return Response({'status': 'erro', 'detalhes': erro.__str__()}, status=status.HTTP_400_BAD_REQUEST)
 

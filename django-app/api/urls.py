@@ -9,7 +9,7 @@ urlpatterns = [
     path('cliente/', views.ClienteView.as_view(), name="Lista clientes"),
     path('cliente/<str:uuid>/', views.ClienteDetalhesView.as_view()),
     path('categoria/', views.CategoriaView.as_view()),
-    path('categoria/<int:id>/', views.CategoriaDetalhesView.as_view()),
+    path('categoria/<str:id>/', views.CategoriaDetalhesView.as_view()),
     #path('cliente/', ListCreateAPIView.as_view(queryset=User.objects.all(), serializer_class=UserSerializer), name='user-list')
     
     # YOUR PATTERNS

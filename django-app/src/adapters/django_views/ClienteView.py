@@ -16,23 +16,28 @@ class ClienteView(APIView):
     @extend_schema(responses=ClienteSerializer(many=True), summary='Obtém lista de clientes cadastrados')
     def get(self, request, format=None):
         """
-        Retorna uma list de **clientes**.
+        Retorna uma lista de **clientes**.
         """
         clientes = ClienteDaoOrm().listCliente()
         serializer = ClienteSerializer(data=clientes, many=True)
         serializer.is_valid()
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
-    @extend_schema(summary='Adiciona novo cliente',responses={ 201 : ClienteSerializer, 401 : None}, parameters=[
-        OpenApiParameter(name='nome', type=OpenApiTypes.STR, examples=[
-            OpenApiExample(name='nome', value='Joao da Silva',
-                           summary='Nome completo do cliente', )
-        ])
+
+    @extend_schema(summary='Adiciona novo cliente', responses={201: ClienteSerializer, 401: None}, parameters=[
+        OpenApiParameter(name='nome', type=type(str),
+                         description='Nome completo do cliente',
+
+                         examples=OpenApiExample(name='nome', value='Joao silva', description='Nome completo do cliente')),
+        OpenApiParameter(name='email', type=type(str),
+                         description='E-mail do cliente'),
+        OpenApiParameter(name='cpf', type=type(str),
+                         description='Cpf do cliente')
 
     ])
     def post(self, request, format=None):
         """
-        Api para cadastrar usuario
+        Api para **cadastrar** cliente
         """
         try:
             cliente = ClienteDaoOrm().addCliente(ClienteFactory.fromDict(request.data))

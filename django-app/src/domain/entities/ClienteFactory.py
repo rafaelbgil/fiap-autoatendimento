@@ -35,6 +35,10 @@ def _validarUuid(uuid: str | UUID) -> str:
         raise Exception('O UUID informado é inválido')
     return uuid_formatado
 
+def _validarNome(nome: str) -> str:
+    if nome and len(nome) > 1:
+        return nome
+    raise Exception('O nome deve ser informado')
 
 class ClienteFactory:
     def fromDict(dicionario_cliente: dict, validar_campos=True) -> Cliente:
@@ -56,8 +60,11 @@ class ClienteFactory:
                 uuid = dicionario_cliente['uuid'].__str__().replace('-','')
 
         if 'nome' in dicionario_cliente:
-                nome = dicionario_cliente['nome']
-        
+                if validar_campos:
+                    nome = _validarNome(dicionario_cliente['nome'])
+                else:
+                    nome = dicionario_cliente['nome']
+
         if 'cpf' in dicionario_cliente:
             cpf = Cpf(cpf=dicionario_cliente['cpf']).cpf
 

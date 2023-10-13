@@ -7,7 +7,7 @@ class ClienteSerializer(serializers.Serializer):
     uuid = serializers.UUIDField(read_only=True)
     nome = serializers.CharField(max_length=120)
     email = serializers.CharField(max_length=120)
-    cpf = serializers.CharField(max_length=11)
+    cpf = serializers.CharField(max_length=11, required=False)
    
     def create(self, validated_data):
         return Cliente.objects.create(**validated_data)
