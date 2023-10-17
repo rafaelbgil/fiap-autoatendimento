@@ -6,7 +6,6 @@ from rest_framework.response import Response
 from rest_framework import status
 from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiExample, OpenApiTypes
 
-
 class ClienteView(APIView):
     """
     Api para gerenciamento de clientes
@@ -24,17 +23,7 @@ class ClienteView(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
-    @extend_schema(summary='Adiciona novo cliente', responses={201: ClienteSerializer, 401: None}, parameters=[
-        OpenApiParameter(name='nome', type=type(str),
-                         description='Nome completo do cliente',
-
-                         examples=OpenApiExample(name='nome', value='Joao silva', description='Nome completo do cliente')),
-        OpenApiParameter(name='email', type=type(str),
-                         description='E-mail do cliente'),
-        OpenApiParameter(name='cpf', type=type(str),
-                         description='Cpf do cliente')
-
-    ])
+    @extend_schema(summary='Adiciona novo cliente')
     def post(self, request, format=None):
         """
         Api para **cadastrar** cliente

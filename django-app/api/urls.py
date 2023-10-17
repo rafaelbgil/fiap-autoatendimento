@@ -6,15 +6,17 @@ from . import views
 from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
 
 urlpatterns = [
+    #api endpoints
     path('cliente/', views.ClienteView.as_view(), name="Lista clientes"),
     path('cliente/<str:uuid>/', views.ClienteDetalhesView.as_view()),
     path('categoria/', views.CategoriaView.as_view()),
     path('categoria/<str:id>/', views.CategoriaDetalhesView.as_view()),
-    #path('cliente/', ListCreateAPIView.as_view(queryset=User.objects.all(), serializer_class=UserSerializer), name='user-list')
+    path('produto/', views.ProdutoView.as_view()),
+    path('produto/<str:id>/', views.ProdutoDetalhesView.as_view()),
     
-    # YOUR PATTERNS
+    # Schema
     path('schema/', SpectacularAPIView.as_view(), name='schema'),
-    # Optional UI:
+    # Swager and redoc:
     path('swagger/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
     path('redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
 ]

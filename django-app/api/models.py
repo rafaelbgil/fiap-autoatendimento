@@ -13,4 +13,12 @@ class Cliente(models.Model):
 
 
 class Categoria(models.Model):
-    nome = models.CharField(max_length=40, blank=False)
+    nome = models.CharField(max_length=40, blank=False, unique=True)
+
+
+class Produto(models.Model):
+    nome = models.CharField(max_length=40, null=False)
+    descricao = models.CharField(max_length=1024, null=True)
+    preco =  models.FloatField(null=False)
+    imagem_url = models.CharField(max_length=1024, null=True)
+    categoria = models.ForeignKey(to=Categoria ,on_delete=models.CASCADE, null=True)

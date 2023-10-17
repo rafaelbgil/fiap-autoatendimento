@@ -21,3 +21,10 @@ class CategoriaSerializer(serializers.Serializer):
         return Categoria.objects.create(**validated_data)
     
     
+class ProdutoSerializer(serializers.Serializer):
+    id = serializers.IntegerField(read_only=True)
+    nome = serializers.CharField(max_length=40)
+    preco = serializers.FloatField()
+    id_categoria = serializers.IntegerField(required=False)
+    descricao = serializers.CharField(max_length=1024, required=False)
+    imagem_url = serializers.CharField(max_length=1024, required=False)
