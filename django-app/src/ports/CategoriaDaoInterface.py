@@ -15,5 +15,5 @@ class CategoriaDaoInterface(ABC):
         pass
 
     @staticmethod 
-    def listCategoria(self) -> list[Categoria]:
+    def listCategoria(self) -> [Categoria]:
         pass

@@ -6,13 +6,20 @@ from api.serializers import CategoriaSerializer
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
-from drf_spectacular.utils import extend_schema
+from drf_spectacular.utils import extend_schema, OpenApiExample
 
 
 class CategoriaView(APIView):
     serializer_class = CategoriaSerializer
 
-    @extend_schema(responses=CategoriaSerializer(many=True), summary='Obtém lista de categorias')
+    @extend_schema(responses=CategoriaSerializer(many=True), summary='Obtém lista de categorias', examples=[
+        OpenApiExample('Exemplo de uso',
+                       value={"id": 1,
+                              "nome": "doces"},
+                       request_only=False,
+                       response_only=True,
+                       )
+    ])
     def get(self, request, format=None):
         """
         Api para listar categorias
@@ -22,13 +29,26 @@ class CategoriaView(APIView):
         serializer.is_valid()
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-    @extend_schema(summary='Adiciona nova categoria')
+    @extend_schema(summary='Adiciona nova categoria', examples=[
+        OpenApiExample('Exemplo de uso',
+                       value={"id": 1,
+                              "nome": "salgados"},
+                       request_only=False,
+                       response_only=True,
+                       ),
+
+        OpenApiExample('Exemplo de uso',
+                       value={"nome": "salgados"},
+                       request_only=True,
+                       response_only=False,
+                       )
+    ])
     def post(self, request, format=None):
         """
         Api para adicionar categoria
         """
         try:
-           categoria =  CategoriaFactory.fromDict(request.data)
+            categoria = CategoriaFactory.fromDict(request.data)
         except Exception as erro:
             return Response({'status': 'erro', 'detalhes': erro.__str__()}, status=status.HTTP_400_BAD_REQUEST)
 

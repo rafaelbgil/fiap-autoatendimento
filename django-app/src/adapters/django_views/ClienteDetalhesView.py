@@ -4,12 +4,20 @@ from api.serializers import ClienteSerializer
 from api.models import Cliente
 from rest_framework.response import Response
 from rest_framework import status
-from drf_spectacular.utils import extend_schema
+from drf_spectacular.utils import extend_schema, OpenApiExample
 
 
 class ClienteDetalhesView(APIView):
     serializer_class = ClienteSerializer
-    @extend_schema(summary='Obtém dados de cliente selecionado')
+    @extend_schema(summary='Obtém dados de cliente selecionado',
+                   examples=[
+                       OpenApiExample('Exemplo de uso',
+                       value={"uuid": "aaacdd85853f4fbd920616f4bd2d8e66",
+                              "nome": 'Joao Silva', "email": 'joao@teste.com', "cpf" : "12345678901"},
+                       request_only=False,
+                       response_only=True,
+                       )
+                   ])
     def get(self, request, uuid: str, format=None):
         """
         Api para visualizar dados de usuario selecionado

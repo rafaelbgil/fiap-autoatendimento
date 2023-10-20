@@ -5,12 +5,19 @@ from api.serializers import CategoriaSerializer
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
-from drf_spectacular.utils import extend_schema
+from drf_spectacular.utils import extend_schema, OpenApiExample
 
 class CategoriaDetalhesView(APIView):
     serializer_class = CategoriaSerializer
 
-    @extend_schema(summary='Obtém dados de categoria selecionada')
+    @extend_schema(summary='Obtém dados de categoria selecionada', examples=[
+        OpenApiExample('Exemplo de uso',
+                       value={"id": 1,
+                              "nome": "salgados"},
+                       request_only=False,
+                       response_only=True,
+                       )
+    ])
     def get(self, request, id: int, format=None):
         """
         Obtém dados de categoria selecionada

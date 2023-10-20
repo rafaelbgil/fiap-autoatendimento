@@ -13,7 +13,8 @@ urlpatterns = [
     path('categoria/<str:id>/', views.CategoriaDetalhesView.as_view()),
     path('produto/', views.ProdutoView.as_view()),
     path('produto/<str:id>/', views.ProdutoDetalhesView.as_view()),
-    
+    path('produto/findByCategoria/<str:categoria>/', views.ProdutoByCategoriaView.as_view()),
+    path('pedido/', views.PedidoView.as_view()),
     # Schema
     path('schema/', SpectacularAPIView.as_view(), name='schema'),
     # Swager and redoc:

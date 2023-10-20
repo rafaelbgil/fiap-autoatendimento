@@ -1,16 +1,17 @@
-from .Item import Item
+from .Produto import Produto
 from abc import ABC
 
+
 class Pedido(ABC):
-    cpf : str | None
-    numero : int
-    lista_itens : list[Item]
-    valor : float
+    id: int | None
+    cpf: str | None
+    numero: int | None
+    lista_itens: list | None
+    valor: float
 
-    def __init__(self, numero: int, lista_itens: list[Item], valor: float, cpf: str | None ):
-        self.numero = int(numero)
+    def __init__(self, numero: int, valor: float, lista_produtos: list | None = None, cpf: str | None = None, id: int = None):
+        self.numero = numero
         self.cpf = cpf
-        self.lista_itens = lista_itens
+        self.lista_produtos = lista_produtos
         self.valor = float(valor)
-
-    
+        self.id = id

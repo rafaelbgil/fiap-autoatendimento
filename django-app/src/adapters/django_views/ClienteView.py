@@ -6,13 +6,21 @@ from rest_framework.response import Response
 from rest_framework import status
 from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiExample, OpenApiTypes
 
+
 class ClienteView(APIView):
     """
     Api para gerenciamento de clientes
     """
     serializer_class = ClienteSerializer
 
-    @extend_schema(responses=ClienteSerializer(many=True), summary='Obtém lista de clientes cadastrados')
+    @extend_schema(responses=ClienteSerializer(many=True), summary='Obtém lista de clientes cadastrados', examples=[
+        OpenApiExample('Exemplo de uso',
+                       value={"uuid": "aaacdd85853f4fbd920616f4bd2d8e66",
+                              "nome": 'Joao Silva', "email": 'joao@teste.com', "cpf" : "12345678901"},
+                       request_only=False,
+                       response_only=True,
+                       )
+    ])
     def get(self, request, format=None):
         """
         Retorna uma lista de **clientes**.
@@ -22,8 +30,19 @@ class ClienteView(APIView):
         serializer.is_valid()
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-
-    @extend_schema(summary='Adiciona novo cliente')
+    @extend_schema(summary='Adiciona novo cliente', examples=[
+        OpenApiExample('Exemplo de uso',
+                       value={"uuid": "aaacdd85853f4fbd920616f4bd2d8e66",
+                              "nome": 'Joao Silva', "email": 'joao@teste.com', "cpf" : "12345678901"},
+                       request_only=False,
+                       response_only=True,
+                       ),
+        OpenApiExample('Exemplo de uso',
+                       value={"nome": 'Joao Silva', "email": 'joao@teste.com', "cpf" : "12345678901"},
+                       request_only=True,
+                       response_only=False,
+                       )
+    ])
     def post(self, request, format=None):
         """
         Api para **cadastrar** cliente
