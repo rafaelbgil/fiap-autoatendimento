@@ -1,0 +1,12 @@
+#imagem base
+FROM alpine:3.18.4
+
+#workdir
+WORKDIR /app
+COPY django-app /app
+
+RUN apk add --no-cache gcc python3 python3-dev linux-headers musl-dev pcre-dev py3-mysqlclient mariadb-dev py3-pip && pip3 install --no-cache-dir -r requirements.txt 
+
+EXPOSE 8000
+
+CMD ["python" ,"manage.py", "runserver", "0.0.0.0:8000"]
