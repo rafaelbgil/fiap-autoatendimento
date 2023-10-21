@@ -3,7 +3,7 @@ from .ItemPedido import ItemPedido
 
 
 class ItemPedidoFactory:
-    def createByProduto(produto: Produto, quantidade=1):
+    def createByProduto(produto: Produto, quantidade=1) -> ItemPedido:
         return ItemPedido(nome=produto.nome,
                           descricao=produto.descricao,
                           preco=produto.preco,
@@ -12,7 +12,7 @@ class ItemPedidoFactory:
                           quantidade=quantidade
                           )
 
-    def fromDict(dicionario_item):
+    def fromDict(dicionario_item) -> ItemPedido:
         quantidade = 1
         nome = None
         descricao = None

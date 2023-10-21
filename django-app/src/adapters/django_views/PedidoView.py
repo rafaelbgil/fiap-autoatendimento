@@ -1,5 +1,5 @@
 from src.domain.entities.PedidoFactory import PedidoFactory
-from src.adapters.django_orm.PedidoRepositoryOrm import PedidoRepositoryInterface
+from src.adapters.django_orm.PedidoRepositoryOrm import PedidoRepositoryOrm
 from rest_framework.views import APIView
 from api.models import Pedido as PedidoModel
 from api.serializers import PedidoSerializer
@@ -20,7 +20,7 @@ class PedidoView(APIView):
             "cpf": "12345678901",
             "valor": 10.90,
             "status": "aguardando_pagamento",
-            "lista_produtos": [
+            "lista_itens": [
                 {
                     "id": 1,
                     "nome": "Hamburguer",
@@ -32,6 +32,9 @@ class PedidoView(APIView):
         }, response_only=True)
     ])
     def get(self, request, format=None):
+        """
+        Obtém lista de **pedidos**
+        """
         pedidos = PedidoModel.objects.all()
         serializer = PedidoSerializer(pedidos, many=True)
 
@@ -40,7 +43,7 @@ class PedidoView(APIView):
     @extend_schema(summary='Adiciona novo pedido', examples=[
         OpenApiExample('Exemplo de pedido', value={
             "cpf": "12345678901",
-            "lista_produtos": [
+            "lista_itens": [
                 {
                     "id": 1,
                     "quantidade": 1
@@ -64,4 +67,9 @@ class PedidoView(APIView):
         }, response_only=True)
     ])
     def post(self, request, format=None):
-        pass
+        """
+        Adiciona novo **pedido**
+        """
+        pedido = PedidoRepositoryOrm.addPedidoFromDict(dicionario_pedido=request.data)
+        serializer = PedidoSerializer(instance=pedido)
+        return Response(serializer.data)

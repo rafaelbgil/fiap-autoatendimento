@@ -40,10 +40,9 @@ class ItemPedidoSerializer(serializers.Serializer):
 
 class PedidoSerializer(serializers.Serializer):
     id = serializers.IntegerField(read_only=True)
-    #numero = serializers.IntegerField()
-    cpf = serializers.CharField(max_length=11)
+    cpf = serializers.CharField(max_length=11, required=False)
     valor = serializers.FloatField()
-    status = serializers.CharField()
+    status = serializers.CharField(read_only=True)
     lista_itens = serializers.SerializerMethodField()
     
 

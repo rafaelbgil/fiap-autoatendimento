@@ -1,7 +1,12 @@
 from src.ports.PedidoRepositoryInterface import PedidoRepositoryInterface
 from src.domain.entities.Pedido import Pedido
 from src.domain.entities.PedidoFactory import PedidoFactory
+from src.domain.entities.ItemPedidoFactory import ItemPedidoFactory
+from src.domain.entities.TypeCpf import Cpf
 from api.models import Pedido as PedidoModel
+from api.models import ItemPedido as ItemPedidoModel
+from api.models import Produto as ProdutoModel
+
 
 class PedidoRepositoryOrm(PedidoRepositoryInterface):
     def listPedido() -> [Pedido]:
@@ -10,10 +15,56 @@ class PedidoRepositoryOrm(PedidoRepositoryInterface):
 
         if not pedidos_queryset:
             return lista_pedidos
-        
+
         for pedido_orm in pedidos_queryset:
-            pedido = PedidoFactory.fromDict(dicionario_pedido=pedido_orm.__dict__)
+            pedido = PedidoFactory.fromDict(
+                dicionario_pedido=pedido_orm.__dict__)
             pedido.numero = pedido.id
             lista_pedidos.append(pedido)
-        
+
         return lista_pedidos
+
+    def addPedidoFromDict(dicionario_pedido: dict):
+        if not 'lista_itens' in dicionario_pedido:
+            raise Exception('A lista de itens não pode ser vazia.')
+
+        lista_itens = []
+        valor_total = 0
+        cpf = None
+        # Verifica se produto consultado pelo id existe, cria um objeto ItemPedido e o adiciona a lista_itens
+        for item in dicionario_pedido['lista_itens']:
+            try:
+                produto_model = ProdutoModel.objects.get(id=item['id'])
+            except:
+                raise Exception(
+                    'Nao foi possivel localizar o item com id %s.' % (item['id']))
+            item_pedido = ItemPedidoFactory.fromDict(dicionario_item=produto_model.__dict__)
+            item_pedido.quantidade = item['quantidade']
+            valor_total = valor_total + (item['quantidade'] * item_pedido.preco)
+            lista_itens.append(item_pedido)
+
+        if 'cpf' in dicionario_pedido:
+            cpf = Cpf(cpf=dicionario_pedido['cpf'])
+        
+        pedido_orm = PedidoModel()
+        pedido_orm.cpf = cpf
+        pedido_orm.valor = valor_total
+        try:
+            pedido_orm.save()
+        except:
+            raise(Exception)
+        
+        for item_da_lista in lista_itens:
+            item_pedido_orm = ItemPedidoModel()
+            item_pedido_orm.pedido = pedido_orm
+            item_pedido_orm.nome = item_da_lista.nome
+            item_pedido_orm.descricacao = item_da_lista.descricao
+            item_pedido_orm.quantidade = item_da_lista.quantidade
+            item_pedido_orm.imagem_url = item_da_lista.imagem_url
+            item_pedido_orm.preco = item_da_lista.preco
+            try:
+                item_pedido_orm.save()
+            except:
+                raise(Exception)
+            
+        return pedido_orm
