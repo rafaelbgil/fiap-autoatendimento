@@ -5,3 +5,4 @@ migrations/*
 db.sqlite3
 api/migrations/*
 api/migrations
+django-app/api/migrations/

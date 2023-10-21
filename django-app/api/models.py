@@ -42,7 +42,7 @@ class Pedido(models.Model):
 
 class ItemPedido(models.Model):
     nome = models.CharField(max_length=40, null=False)
-    descricacao = models.CharField(max_length=1024, null=True, blank=True)
+    descricao = models.CharField(max_length=1024, null=True, blank=True)
     preco = models.FloatField(null=False)
     imagem_url = models.CharField(max_length=1024, null=True, blank=True)
     categoria = models.CharField(max_length=40, null=True, blank=True)
