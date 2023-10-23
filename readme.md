@@ -20,5 +20,10 @@ No miro há os seguintes elementos:
 
 ## Execução do composer
 
-``` git clone https://github.com/rafaelbgil/fiap-autoatendimento.git```
+``` $ git clone https://github.com/rafaelbgil/fiap-autoatendimento.git ```
 
+
+``` $ cd fiap-autoatendimento ```
+
+
+``` $ docker-compose up ```
