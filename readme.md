@@ -17,3 +17,8 @@ No miro há os seguintes elementos:
 - Storytelling escrito
 - Event Storming com os eventos
 - Event Storming com a definição dos agredados
+
+## Execução do composer
+
+``` git clone https://github.com/rafaelbgil/fiap-autoatendimento.git```
+

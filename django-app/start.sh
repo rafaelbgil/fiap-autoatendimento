@@ -1,5 +1,7 @@
 #!/bin/sh
 #Arquivo de start via docker
+echo "Executando espera de 5 segundos para assegurar que o mysql ja esta no ar"
+sleep 5
 python manage.py makemigrations api
 python manage.py migrate 
 python manage.py loaddata django-inicial-data.yaml

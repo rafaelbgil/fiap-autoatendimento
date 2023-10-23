@@ -1,0 +1,33 @@
+services:
+    banco:
+      image: "mariadb:11.1"
+      environment:
+        MARIADB_USER: fiap-user
+        MARIADB_PASSWORD: fiap-password
+        MARIADB_DATABASE: FIAP-LANCHONETE
+        MARIADB_ROOT_PASSWORD: fiap-password
+      healthcheck:
+        test: ["CMD", "ss -nl | grep :23"]
+        interval: 1m30s
+        timeout: 10s
+        retries: 3
+        start_period: 5s
+      volumes:
+        - .:/var/lib/mysql
+
+    web:
+      build: 
+        context: .
+        dockerfile: ./Dockerfile-django
+      depends_on:
+        - banco
+      ports:
+        - "8000:8000"
+      environment:
+        DATABASE_HOST: banco
+        DATABASE_PORT: 3306
+        DATABASE_NAME: FIAP-LANCHONETE
+        DATABASE_USER: fiap-user
+        DATABASE_PASSWORD: fiap-password
+
+
