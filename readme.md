@@ -27,3 +27,18 @@ No miro há os seguintes elementos:
 
 
 ``` $ docker-compose up ```
+
+
+## URLS úteis:
+swagger : http://127.0.0.1:8000/api/swagger
+
+redoc: http://127.0.0.1:8000/api/redoc
+
+## URLS das apis:
+http://127.0.0.1:8000/api/cliente 
+
+http://127.0.0.1:8000/api/categoria
+
+http://127.0.0.1:8000/api/produto
+
+http://127.0.0.1:8000/api/pedido
