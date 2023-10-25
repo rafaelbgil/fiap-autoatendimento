@@ -32,13 +32,13 @@ class ClienteView(APIView):
 
     @extend_schema(summary='Adiciona novo cliente', examples=[
         OpenApiExample('Exemplo de uso',
-                       value={"uuid": "aaacdd85853f4fbd920616f4bd2d8e66",
-                              "nome": 'Joao Silva', "email": 'joao@teste.com', "cpf" : "12345678901"},
+                       value={"uuid": "lbbcdd85853f4fbd920616f4bd2d8e66",
+                              "nome": 'Luis Silva', "email": 'luis@teste.com', "cpf" : "98345678901"},
                        request_only=False,
                        response_only=True,
                        ),
         OpenApiExample('Exemplo de uso',
-                       value={"nome": 'Joao Silva', "email": 'joao@teste.com', "cpf" : "12345678901"},
+                       value={"nome": 'Luis Silva', "email": 'luis@teste.com', "cpf" : "98345678901"},
                        request_only=True,
                        response_only=False,
                        )
