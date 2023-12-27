@@ -1,5 +1,5 @@
-from src.adapters.django_orm.ProdutoDaoOrm import ProdutoDaoOrm
-from src.domain.entities.ProdutoFactory import ProdutoFactory
+from src.entities.ProdutoFactory import ProdutoFactory
+from src.db.django_orm.ProdutoDaoOrm import ProdutoDaoOrm
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status

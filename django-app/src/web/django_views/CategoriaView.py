@@ -1,5 +1,5 @@
-from src.domain.entities.CategoriaFactory import CategoriaFactory
-from src.adapters.django_orm.CategoriaDaoOrm import CategoriaDaoOrm
+from src.entities.CategoriaFactory import CategoriaFactory
+from src.db.django_orm.CategoriaDaoOrm import CategoriaDaoOrm
 from rest_framework.views import APIView
 from api.models import Categoria
 from api.serializers import CategoriaSerializer

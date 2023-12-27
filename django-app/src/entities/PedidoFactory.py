@@ -1,7 +1,7 @@
-from src.domain.entities.Pedido import Pedido
-from src.domain.entities.ItemPedido import ItemPedido
-#from src.domain.entities.ProdutoFactory import ProdutoFactory
-from src.domain.entities.TypeCpf import _validate_cpf
+from src.entities.Pedido import Pedido
+from src.entities.ItemPedido import ItemPedido
+from src.entities.ProdutoFactory import ProdutoFactory
+from src.entities.TypeCpf import _validate_cpf
 
 def _validar_lista_itens(lista_itens :  list) -> [ItemPedido]:
     if not type(lista_itens) == list:

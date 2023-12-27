@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from src.domain.entities.Pedido import Pedido
+from src.entities.Pedido import Pedido
 
 class PedidoRepositoryInterface(ABC):
     

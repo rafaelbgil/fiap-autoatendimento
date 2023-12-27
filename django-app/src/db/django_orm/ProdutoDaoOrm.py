@@ -1,9 +1,9 @@
-from src.domain.entities.Produto import Produto
-from src.domain.entities.ProdutoFactory import ProdutoFactory
-from src.ports.ProdutoDaoInterface import ProdutoDaoInterface
+from src.entities.Produto import Produto
+from src.entities.ProdutoFactory import ProdutoFactory
+from src.gateways.ProdutoDaoInterface import ProdutoDaoInterface
 from api.models import Produto as ProdutoModel
 from api.models import Categoria as CategoriaModel
-from src.domain.entities.Produto import Produto
+from src.entities.Produto import Produto
 
 
 class ProdutoDaoOrm(ProdutoDaoInterface):

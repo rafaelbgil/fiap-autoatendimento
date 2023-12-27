@@ -1,8 +1,8 @@
-from src.ports.PedidoRepositoryInterface import PedidoRepositoryInterface
-from src.domain.entities.Pedido import Pedido
-from src.domain.entities.PedidoFactory import PedidoFactory
-from src.domain.entities.ItemPedidoFactory import ItemPedidoFactory
-from src.domain.entities.TypeCpf import Cpf
+from src.gateways.PedidoRepositoryInterface import PedidoRepositoryInterface
+from src.entities.Pedido import Pedido
+from src.entities.PedidoFactory import PedidoFactory
+from src.entities.ItemPedidoFactory import ItemPedidoFactory
+from src.entities.TypeCpf import Cpf
 from api.models import Pedido as PedidoModel
 from api.models import ItemPedido as ItemPedidoModel
 from api.models import Produto as ProdutoModel

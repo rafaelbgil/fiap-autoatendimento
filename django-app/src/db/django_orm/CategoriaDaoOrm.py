@@ -1,6 +1,6 @@
-from src.ports.CategoriaDaoInterface import CategoriaDaoInterface
-from src.domain.entities.Categoria import Categoria
-from src.domain.entities.CategoriaFactory import CategoriaFactory
+from src.gateways.CategoriaDaoInterface import CategoriaDaoInterface
+from src.entities.Categoria import Categoria
+from src.entities.CategoriaFactory import CategoriaFactory
 from api.models import Categoria as CategoriaModel
 
 

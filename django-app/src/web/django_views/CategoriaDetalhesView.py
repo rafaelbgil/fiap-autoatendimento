@@ -1,6 +1,6 @@
 from rest_framework.views import APIView
 from api.models import Categoria
-from src.adapters.django_orm.CategoriaDaoOrm import CategoriaDaoOrm
+from src.db.django_orm.CategoriaDaoOrm import CategoriaDaoOrm
 from api.serializers import CategoriaSerializer
 from rest_framework.response import Response
 from rest_framework import status

@@ -1,4 +1,4 @@
-from src.domain.entities.Produto import Produto
+from src.entities.Produto import Produto
 
 class ItemPedido(Produto):
     quantidade : int 

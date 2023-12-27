@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from src.domain.entities.Categoria import Categoria
+from src.entities.Categoria import Categoria
 
 class CategoriaDaoInterface(ABC):
     @staticmethod

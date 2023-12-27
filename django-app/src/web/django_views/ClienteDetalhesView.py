@@ -1,4 +1,4 @@
-from src.adapters.django_orm.ClienteDaoOrm import ClienteDaoOrm
+from src.db.django_orm.ClienteDaoOrm import ClienteDaoOrm
 from rest_framework.views import APIView
 from api.serializers import ClienteSerializer
 from api.models import Cliente

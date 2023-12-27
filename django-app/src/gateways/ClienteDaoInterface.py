@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from src.domain.entities.Cliente import Cliente
+from src.entities.Cliente import Cliente
 
 class ClienteDaoInterface(ABC):
     @abstractmethod

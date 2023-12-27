@@ -1,5 +1,5 @@
-from src.domain.entities.PedidoFactory import PedidoFactory
-from src.adapters.django_orm.PedidoRepositoryOrm import PedidoRepositoryOrm
+from src.entities.PedidoFactory import PedidoFactory
+from src.db.django_orm.PedidoRepositoryOrm import PedidoRepositoryOrm
 from rest_framework.views import APIView
 from api.models import Pedido as PedidoModel
 from api.serializers import PedidoSerializer

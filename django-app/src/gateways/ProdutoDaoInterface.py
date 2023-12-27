@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from src.domain.entities.Produto import Produto
+from src.entities.Produto import Produto
 
 class ProdutoDaoInterface(ABC):
     @abstractmethod

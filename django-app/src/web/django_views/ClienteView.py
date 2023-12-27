@@ -1,5 +1,5 @@
-from src.domain.entities.ClienteFactory import ClienteFactory
-from src.adapters.django_orm.ClienteDaoOrm import ClienteDaoOrm
+from src.entities.ClienteFactory import ClienteFactory
+from src.db.django_orm.ClienteDaoOrm import ClienteDaoOrm
 from rest_framework.views import APIView
 from api.serializers import ClienteSerializer
 from rest_framework.response import Response
