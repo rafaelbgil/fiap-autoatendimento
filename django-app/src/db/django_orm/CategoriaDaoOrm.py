@@ -24,8 +24,13 @@ class CategoriaDaoOrm(CategoriaDaoInterface):
 
         return categorias
 
-    def deleteCategoria(self):
-        pass
+    def deleteCategoria(self, id: int):
+        try:
+            categoria_queryset = CategoriaModel.objects.get(id=id)
+            categoria_queryset.delete()
+        except:
+            raise Exception('Categoria não foi encontrada ou não pode ser removida. Verifique o código informado.')
+        return True
 
     def addCategoria(self, categoria: Categoria):
         categoria_orm = CategoriaModel()

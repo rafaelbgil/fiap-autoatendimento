@@ -36,12 +36,9 @@ class CategoriaDetalhesView(APIView):
         Remove categoria selecionada
         """
         try:
-            categoria = Categoria.objects.get(id=id)
-        except:
-            return Response(data={'status': 'erro', 'detalhes': 'Categoria nao encontrada.'}, status=status.HTTP_400_BAD_REQUEST)
-
-        try:
-            categoria.delete()
+            CategoriaDaoOrm().deleteCategoria(id)
             return Response(data={'status': 'sucesso', 'detalhes': 'Categoria removida com sucesso.'}, status=status.HTTP_200_OK)
-        except:
-            return Response(data={'status': 'erro', 'detalhes': 'Não foi possível remover a categoria'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        except Exception as erro:
+            return Response(data={'status': 'erro', 'descricao': erro.__str__()}, status=status.HTTP_400_BAD_REQUEST)
+
+        

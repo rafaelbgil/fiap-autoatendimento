@@ -7,7 +7,7 @@ class CategoriaDaoInterface(ABC):
         pass
 
     @staticmethod
-    def deleteCategoria(self, id: int):
+    def deleteCategoria(self, id: int) -> bool:
         pass
 
     @staticmethod
