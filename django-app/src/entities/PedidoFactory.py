@@ -10,7 +10,7 @@ def _validar_lista_itens(lista_itens :  list) -> [ItemPedido]:
     lista_itens_validados = []
     for produto in lista_itens:
         produto_validado = ProdutoFactory.fromDict(dicionario_produto=produto)
-        lista_itens.append(lista_itens_validados)
+        lista_itens_validados.append(produto_validado)
     
     return lista_itens_validados
     
@@ -26,7 +26,7 @@ def _validar_valor(valor: float):
 class PedidoFactory:
     @staticmethod
     def fromDict(dicionario_pedido: dict):
-        numero = None
+        numero = dicionario_pedido['id']
         cpf = None
         valor = 0
         if 'lista_itens' in dicionario_pedido:
@@ -34,11 +34,11 @@ class PedidoFactory:
         else:
             lista_itens = []
 
-        if cpf in dicionario_pedido:
+        if 'cpf' in dicionario_pedido:
             cpf = _validate_cpf(dicionario_pedido['cpf'])
         
         for produto in lista_itens:
-            valor = valor + produto
+            valor = valor + produto.preco
         
         valor = _validar_valor(valor=valor)
 

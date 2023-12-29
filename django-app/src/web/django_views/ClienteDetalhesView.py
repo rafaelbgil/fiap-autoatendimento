@@ -1,7 +1,6 @@
 from src.db.django_orm.ClienteDaoOrm import ClienteDaoOrm
 from rest_framework.views import APIView
 from api.serializers import ClienteSerializer
-from api.models import Cliente
 from rest_framework.response import Response
 from rest_framework import status
 from drf_spectacular.utils import extend_schema, OpenApiExample

@@ -17,9 +17,19 @@ class PedidoRepositoryOrm(PedidoRepositoryInterface):
             return lista_pedidos
 
         for pedido_orm in pedidos_queryset:
+            lista_itens_orm = pedido_orm.itempedido_set.all()
+            lista_itens = []
+            for item in lista_itens_orm:
+                lista_itens.append(item.__dict__)
+            
+            pedido_dict = pedido_orm.__dict__
+            pedido_dict['numero'] = pedido_orm.id
+            pedido_dict['lista_itens'] = lista_itens
+            pedido_dict['cpf'] =  pedido_orm.cpf
+                
+
             pedido = PedidoFactory.fromDict(
-                dicionario_pedido=pedido_orm.__dict__)
-            pedido.numero = pedido.id
+                dicionario_pedido=pedido_dict)
             lista_pedidos.append(pedido)
 
         return lista_pedidos

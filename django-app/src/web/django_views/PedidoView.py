@@ -1,12 +1,10 @@
-from src.entities.PedidoFactory import PedidoFactory
 from src.db.django_orm.PedidoRepositoryOrm import PedidoRepositoryOrm
 from rest_framework.views import APIView
-from api.models import Pedido as PedidoModel
 from api.serializers import PedidoSerializer
 from rest_framework.response import Response
 from rest_framework import status
 from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiExample, OpenApiTypes
-
+from src.controllers.PedidoDto import PedidoDto
 
 class PedidoView(APIView):
     """
@@ -35,10 +33,12 @@ class PedidoView(APIView):
         """
         Obtém lista de **pedidos**
         """
-        pedidos = PedidoModel.objects.all()
-        serializer = PedidoSerializer(pedidos, many=True)
-
-        return Response(serializer.data)
+        pedidos = PedidoRepositoryOrm.listPedido()
+        #pedidos = PedidoModel.objects.all()
+        #serializer = PedidoSerializer(pedidos, many=True)
+        pedido_dict = PedidoDto.fromPedidoToDict(pedidos[0])
+        return Response(data=pedido_dict, status=status.HTTP_200_OK)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
     @extend_schema(summary='Adiciona novo pedido', examples=[
         OpenApiExample('Exemplo de pedido', value={
@@ -72,4 +72,4 @@ class PedidoView(APIView):
         """
         pedido = PedidoRepositoryOrm.addPedidoFromDict(dicionario_pedido=request.data)
         serializer = PedidoSerializer(instance=pedido)
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
