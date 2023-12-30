@@ -25,8 +25,6 @@ class PedidoRepositoryOrm(PedidoRepositoryInterface):
             pedido_dict = pedido_orm.__dict__
             pedido_dict['numero'] = pedido_orm.id
             pedido_dict['lista_itens'] = lista_itens
-            #pedido_dict['cpf'] =  pedido_orm.cpf          
-            #pedido_dict['status'] = pedido_orm.status
 
             pedido = PedidoFactory.fromDict(
                 dicionario_pedido=pedido_dict)
