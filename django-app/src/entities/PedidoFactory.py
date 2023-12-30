@@ -42,6 +42,6 @@ class PedidoFactory:
         
         valor = _validar_valor(valor=valor)
 
-        return Pedido(numero=numero, lista_itens=lista_itens, valor=valor, cpf=cpf)
+        return Pedido(numero=numero, lista_itens=lista_itens, valor=valor, cpf=cpf, status=dicionario_pedido['status'])
 
 

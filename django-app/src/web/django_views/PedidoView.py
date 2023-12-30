@@ -36,7 +36,7 @@ class PedidoView(APIView):
         pedidos = PedidoRepositoryOrm.listPedido()
         #pedidos = PedidoModel.objects.all()
         #serializer = PedidoSerializer(pedidos, many=True)
-        pedido_dict = PedidoDto.fromPedidoToDict(pedidos[0])
+        pedido_dict = PedidoDto.fromListPedidoToDict(pedidos)
         return Response(data=pedido_dict, status=status.HTTP_200_OK)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
