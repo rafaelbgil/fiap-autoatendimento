@@ -1,4 +1,4 @@
-from src.gateways.CategoriaDaoInterface import CategoriaDaoInterface
+from src.usecases.interfaces.CategoriaDaoInterface import CategoriaDaoInterface
 from src.entities.Categoria import Categoria
 from src.entities.CategoriaFactory import CategoriaFactory
 from api.models import Categoria as CategoriaModel

@@ -1,4 +1,5 @@
 from src.db.django_orm.PedidoRepositoryOrm import PedidoRepositoryOrm
+from src.usecases.UseCasePedido import UseCasePedido
 from rest_framework.views import APIView
 from api.serializers import PedidoSerializer
 from rest_framework.response import Response
@@ -33,7 +34,7 @@ class PedidoView(APIView):
         """
         Obtém lista de **pedidos**
         """
-        pedidos = PedidoRepositoryOrm.listPedido()
+        pedidos = UseCasePedido.getListaPedidos(PedidoRepositoryOrm)
         pedido_dict = PedidoDto.fromListPedidoToDict(pedidos)
         return Response(data=pedido_dict, status=status.HTTP_200_OK)
 

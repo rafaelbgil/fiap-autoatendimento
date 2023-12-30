@@ -1,7 +1,7 @@
 from api.models import Cliente as ClienteModel
 from src.entities.Cliente import Cliente
 from src.entities.ClienteFactory import ClienteFactory, _validarUuid
-from src.gateways.ClienteDaoInterface import ClienteDaoInterface
+from src.usecases.interfaces.ClienteDaoInterface import ClienteDaoInterface
 
 
 

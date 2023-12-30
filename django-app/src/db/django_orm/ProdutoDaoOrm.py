@@ -1,6 +1,6 @@
 from src.entities.Produto import Produto
 from src.entities.ProdutoFactory import ProdutoFactory
-from src.gateways.ProdutoDaoInterface import ProdutoDaoInterface
+from src.usecases.interfaces.ProdutoDaoInterface import ProdutoDaoInterface
 from api.models import Produto as ProdutoModel
 from api.models import Categoria as CategoriaModel
 from src.entities.Produto import Produto

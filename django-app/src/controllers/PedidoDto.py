@@ -19,7 +19,7 @@ class PedidoDto:
             
         return pedido_dict
 
-    def fromListPedidoToDict(lista_pedidos: [Pedido])-> [dict]:
+    def fromListPedidoToDict(lista_pedidos: [Pedido])-> list[dict]:
         if not type(lista_pedidos) == list:
             raise Exception('O objeto nao e do tipo Lista Pedido')
         lista_pedidos_dict = []
