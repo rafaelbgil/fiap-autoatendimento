@@ -42,4 +42,5 @@ class PedidoFactory:
 
         return Pedido(numero=numero, lista_itens=lista_itens, valor=valor, cpf=cpf, status=dicionario_pedido['status'])
 
+    
 

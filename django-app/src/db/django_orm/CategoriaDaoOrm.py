@@ -15,7 +15,7 @@ class CategoriaDaoOrm(CategoriaDaoInterface):
 
         return CategoriaFactory.fromDict(categoria_queryset.__dict__)
 
-    def listCategoria(self) -> list[Categoria]:
+    def listCategoria() -> list[Categoria]:
         categorias_queryset = CategoriaModel.objects.all()
         categorias = []
         for categoria in categorias_queryset.iterator():

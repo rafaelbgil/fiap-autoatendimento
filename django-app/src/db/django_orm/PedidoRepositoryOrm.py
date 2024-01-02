@@ -3,13 +3,14 @@ from src.entities.Pedido import Pedido
 from src.entities.PedidoFactory import PedidoFactory
 from src.entities.ItemPedidoFactory import ItemPedidoFactory
 from src.entities.TypeCpf import Cpf
-from src.controllers.PedidoDto import PedidoDto
+from src.controllers.FormatPedido import FormatPedido
 from api.models import Pedido as PedidoModel
 from api.models import ItemPedido as ItemPedidoModel
 from api.models import Produto as ProdutoModel
 
 
 class PedidoRepositoryOrm(PedidoRepositoryInterface):
+    @staticmethod
     def listPedido() -> list[Pedido]:
         pedidos_queryset = PedidoModel.objects.all()
         lista_pedidos = []
@@ -33,7 +34,8 @@ class PedidoRepositoryOrm(PedidoRepositoryInterface):
         
         return lista_pedidos
 
-    def addPedidoFromDict(dicionario_pedido: dict) -> Pedido:
+    @staticmethod
+    def addPedidoFromDict(dicionario_pedido: dict) -> dict:
         if not 'lista_itens' in dicionario_pedido:
             raise Exception('A lista de itens não pode ser vazia.')
 
@@ -76,4 +78,6 @@ class PedidoRepositoryOrm(PedidoRepositoryInterface):
             except:
                 raise(Exception)
             
-        return PedidoDto.fromPedidoToDict(pedido_orm)
+        return FormatPedido.fromPedidoToDict(pedido_orm)
+    
+

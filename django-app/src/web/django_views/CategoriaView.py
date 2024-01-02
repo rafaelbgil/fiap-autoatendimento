@@ -1,5 +1,7 @@
 from src.entities.CategoriaFactory import CategoriaFactory
 from src.db.django_orm.CategoriaDaoOrm import CategoriaDaoOrm
+from src.usecases.UseCaseCategoria import UseCaseCategoria
+
 from rest_framework.views import APIView
 from api.serializers import CategoriaSerializer
 from rest_framework.response import Response
@@ -23,7 +25,7 @@ class CategoriaView(APIView):
         """
         Api para listar categorias
         """
-        categorias = CategoriaDaoOrm().listCategoria()
+        categorias = UseCaseCategoria.getListaCategoria(repository_categoria=CategoriaDaoOrm)
         serializer = CategoriaSerializer(data=categorias, many=True)
         serializer.is_valid()
         return Response(serializer.data, status=status.HTTP_200_OK)
