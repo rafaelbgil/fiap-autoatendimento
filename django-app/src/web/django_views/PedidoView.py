@@ -16,7 +16,7 @@ class PedidoView(APIView):
     serializer_class = PedidoSerializer
 
     @extend_schema(summary='Obtém lista de pedidos', examples=[
-        OpenApiExample('Exemplo de pedido', value={
+        OpenApiExample('Exemplo de pedido', value=[{
             "id": 1,
             "cpf": "12345678901",
             "valor": 10.90,
@@ -30,7 +30,7 @@ class PedidoView(APIView):
                     "quantidade": 1
                 }
             ]
-        }, response_only=True)
+        }], response_only=True)
     ])
     def get(self, request, format=None):
         """
@@ -50,21 +50,23 @@ class PedidoView(APIView):
                 }
             ]
         }, request_only=True),
-        OpenApiExample('Exemplo de pedido', value={
-            "id": 1,
-            "cpf": "12345678901",
-            "valor": 10.90,
-            "status": "aguardando_pagamento",
-            "lista_produtos": [
-                {
-                    "id": 1,
-                    "nome": "Hamburguer",
-                    "preco": 10.90,
-                    "imagem_url": 'hamburger.png',
-                    "quantidade": 1
-                }
-            ]
-        }, response_only=True)
+        OpenApiExample('Exemplo de pedido', value=
+            [
+                {"id": 1,
+                "cpf": "12345678901",
+                "valor": 10.90,
+                "status": "aguardando_pagamento",
+                "lista_produtos": [
+                    {
+                        "id": 1,
+                        "nome": "Hamburguer",
+                        "preco": 10.90,
+                        "imagem_url": 'hamburger.png',
+                        "quantidade": 1
+                    },
+                ]}
+            ],
+        response_only=True)
     ])
     def post(self, request, format=None):
         """
@@ -72,6 +74,6 @@ class PedidoView(APIView):
         """
         pedido = PedidoRepositoryOrm.addPedidoFromDict(
             dicionario_pedido=request.data)
-        #pedido = UseCasePedido.criarPedidoFromDict(repositorio_pedido=PedidoRepositoryOrm, dicionario_pedido=request.data) 
+        # pedido = UseCasePedido.criarPedidoFromDict(repositorio_pedido=PedidoRepositoryOrm, dicionario_pedido=request.data)
         serializer = PedidoSerializer(instance=pedido)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
