@@ -28,7 +28,8 @@ class Pedido(models.Model):
         ('aguardando_pagamento' , 'aguardando_pagamento'),
         ('preparando' , 'preparando'),
         ('pronto' , 'pronto'),
-        ('entregue' , 'entregue'),
+        ('recebido' , 'recebido'),
+        ('finalizado' , 'finalizado'),
         ('cancelado' , 'cancelado')
     ] 
     cpf = models.CharField(max_length=11, null=True, blank=True)

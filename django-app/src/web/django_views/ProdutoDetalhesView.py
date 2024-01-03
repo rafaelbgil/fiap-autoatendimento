@@ -20,12 +20,11 @@ class ProdutoDetalhesView(APIView):
     def get(self, request, id: str, format=None):
         """
         Api para visualizar dados de produto selecionado
-        summary: aaa
         """
         try:
             produto = ProdutoDaoOrm().getProduto(id)
         except Exception as erro:
-            return Response(data={'status': 'erro', 'descricao': erro.__str__()})
+            return Response(data={'status': 'erro', 'descricao': erro.__str__()}, status=status.HTTP_404_NOT_FOUND)
         serializer = ProdutoSerializer(instance=produto)
         return Response(serializer.data)
 

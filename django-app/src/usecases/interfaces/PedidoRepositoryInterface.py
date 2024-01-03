@@ -3,15 +3,15 @@ from src.entities.Pedido import Pedido
 
 class PedidoRepositoryInterface(ABC):
     @staticmethod
-    def getPedido(self, id: int) -> Pedido:
+    def getPedido(id: int) -> Pedido:
         pass
     
     @staticmethod
-    def listPedido(self) -> list[Pedido]:
+    def listPedido() -> list[Pedido]:
         pass
     
     @staticmethod
-    def addPedido(self, pedido: Pedido) -> Pedido:
+    def addPedido(pedido: Pedido) -> Pedido:
         pass
 
     @staticmethod

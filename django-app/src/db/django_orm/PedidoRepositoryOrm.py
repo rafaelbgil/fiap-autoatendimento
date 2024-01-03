@@ -19,20 +19,26 @@ class PedidoRepositoryOrm(PedidoRepositoryInterface):
             return lista_pedidos
 
         for pedido_orm in pedidos_queryset:
-            lista_itens_orm = pedido_orm.itempedido_set.all()
-            lista_itens = []
-            for item in lista_itens_orm:
-                lista_itens.append(item.__dict__)
-            
-            pedido_dict = pedido_orm.__dict__
-            pedido_dict['numero'] = pedido_orm.id
-            pedido_dict['lista_itens'] = lista_itens
-
-            pedido = PedidoFactory.fromDict(
-                dicionario_pedido=pedido_dict)
+            pedido = PedidoRepositoryOrm.pedidoOrmToPedido(pedido_orm)
             lista_pedidos.append(pedido)
         
         return lista_pedidos
+
+    @staticmethod
+    def pedidoOrmToPedido(pedido_orm: PedidoModel) -> Pedido:
+        lista_itens_orm = pedido_orm.itempedido_set.all()
+        lista_itens = []
+        for item in lista_itens_orm:
+            lista_itens.append(item.__dict__)
+            
+        pedido_dict = pedido_orm.__dict__
+        pedido_dict['numero'] = pedido_orm.id
+        pedido_dict['lista_itens'] = lista_itens
+
+        pedido = PedidoFactory.fromDict(
+                dicionario_pedido=pedido_dict)
+            
+        return pedido
 
     @staticmethod
     def addPedidoFromDict(dicionario_pedido: dict) -> dict:
@@ -79,5 +85,12 @@ class PedidoRepositoryOrm(PedidoRepositoryInterface):
                 raise(Exception)
             
         return pedido_orm
-    
 
+    @staticmethod
+    def getPedido(id: int) -> Pedido:
+        try:
+            pedido_orm = PedidoModel.objects.get(id=id)
+        except:
+            raise Exception('Nao foi possivel localizar o pedido com id %s.' % (id))
+
+        return PedidoRepositoryOrm.pedidoOrmToPedido(pedido_orm=pedido_orm)        

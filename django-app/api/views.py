@@ -6,5 +6,6 @@ from src.web.django_views.ProdutoView import ProdutoView
 from src.web.django_views.ProdutoDetalhesView import ProdutoDetalhesView
 from src.web.django_views.ProdutoByCategoriaView import ProdutoByCategoriaView
 from src.web.django_views.PedidoView import PedidoView
+from src.web.django_views.PedidoDetalhesView import PedidoDetalhesView
 
 
