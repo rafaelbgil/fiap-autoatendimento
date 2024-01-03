@@ -2,8 +2,8 @@ from src.entities.Pedido import Pedido
 from .interfaces.PedidoRepositoryInterface import PedidoRepositoryInterface
 
 class UseCasePedido:
-    def getListaPedidos(repositorio_pedido: PedidoRepositoryInterface) -> list[Pedido]:
+    def obterListaPedidos(repositorio_pedido: PedidoRepositoryInterface) -> list[Pedido]:
         return repositorio_pedido.listPedido()
     
-    def addPedido(repositorio_pedido: PedidoRepositoryInterface) -> Pedido:
-        pass
+    def criarPedidoFromDict(repositorio_pedido: PedidoRepositoryInterface, dicionario_pedido: dict) -> dict:
+        return repositorio_pedido.addPedidoFromDict(dicionario_pedido=dicionario_pedido)

@@ -50,3 +50,4 @@ class PedidoSerializer(serializers.Serializer):
         lista_itens = obj.itempedido_set.all()
         serializer = ItemPedidoSerializer(lista_itens, many=True)
         return serializer.data
+    

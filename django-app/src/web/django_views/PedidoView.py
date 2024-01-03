@@ -36,7 +36,7 @@ class PedidoView(APIView):
         """
         Obtém lista de **pedidos**
         """
-        pedidos = UseCasePedido.getListaPedidos(PedidoRepositoryOrm)
+        pedidos = UseCasePedido.obterListaPedidos(PedidoRepositoryOrm)
         pedido_dict = FormatPedido.fromListPedidoToDict(pedidos)
         return Response(data=pedido_dict, status=status.HTTP_200_OK)
 
@@ -72,5 +72,6 @@ class PedidoView(APIView):
         """
         pedido = PedidoRepositoryOrm.addPedidoFromDict(
             dicionario_pedido=request.data)
+        #pedido = UseCasePedido.criarPedidoFromDict(repositorio_pedido=PedidoRepositoryOrm, dicionario_pedido=request.data) 
         serializer = PedidoSerializer(instance=pedido)
         return Response(serializer.data, status=status.HTTP_201_CREATED)

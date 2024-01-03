@@ -1,4 +1,5 @@
 from src.entities.Pedido import Pedido
+from api.models import Pedido as PedidoOrm
 
 
 class FormatPedido:
@@ -6,13 +7,15 @@ class FormatPedido:
     Classe com métodos responsáveis por formatar pedidos e lista de pedidos para dicionarios
     (utilizados para viasualizacao na api)
     """
-    def fromPedidoToDict(pedido: Pedido) -> dict:
-        if not type(pedido) == Pedido:
-            raise Exception('O objeto nao e do tipo Pedido')
+    def fromPedidoToDict(pedido: Pedido|PedidoOrm) -> dict:
+        if not type(pedido) == Pedido and not type(pedido) == PedidoOrm:
+            raise Exception('O objeto nao e do tipo Pedido ou Pedido Orm')
 
         pedido_dict = pedido.__dict__
-        pedido_dict['id'] = pedido_dict['numero']
-        del (pedido_dict['numero'])
+
+        if not 'id' in pedido_dict:
+            pedido_dict['id'] = pedido_dict['numero']
+            del (pedido_dict['numero'])
         if type(pedido.lista_itens) == list and len(pedido.lista_itens) > 0:
             lista_itens = []
             for item_pedido in pedido.lista_itens:

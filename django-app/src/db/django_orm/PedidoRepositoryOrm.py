@@ -78,6 +78,6 @@ class PedidoRepositoryOrm(PedidoRepositoryInterface):
             except:
                 raise(Exception)
             
-        return FormatPedido.fromPedidoToDict(pedido_orm)
+        return pedido_orm
     
 
