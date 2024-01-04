@@ -8,4 +8,7 @@ class UseCaseCategoria:
     def obterCategoria(repository_categoria: CategoriaDaoInterface, id: int) -> Categoria:
         return repository_categoria.getCategoria(id=id)
     
+    def criarCategoria(repository_categoria: CategoriaDaoInterface, categoria: Categoria) -> Categoria:
+        return repository_categoria.addCategoria(categoria=categoria)
+    
    

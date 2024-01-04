@@ -1,5 +1,7 @@
-from rest_framework.views import APIView
 from src.db.django_orm.CategoriaDaoOrm import CategoriaDaoOrm
+from src.usecases.UseCaseCategoria import UseCaseCategoria
+
+from rest_framework.views import APIView
 from api.serializers import CategoriaSerializer
 from rest_framework.response import Response
 from rest_framework import status
@@ -22,7 +24,7 @@ class CategoriaDetalhesView(APIView):
         Obtém dados de categoria selecionada
         """
         try:
-            categoria = CategoriaDaoOrm().getCategoria(id=id)
+            categoria = UseCaseCategoria.obterCategoria(repository_categoria=CategoriaDaoOrm, id=id)
         except Exception as erro:
             return Response(data={'status': 'erro', 'descricao': erro.__str__()}, status=status.HTTP_404_NOT_FOUND)
 

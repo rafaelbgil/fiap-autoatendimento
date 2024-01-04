@@ -25,10 +25,11 @@ class CategoriaView(APIView):
         """
         Api para listar categorias
         """
-        categorias = UseCaseCategoria.getListaCategoria(repository_categoria=CategoriaDaoOrm)
+        categorias = UseCaseCategoria.obterListaCategoria(
+            repository_categoria=CategoriaDaoOrm)
         serializer = CategoriaSerializer(data=categorias, many=True)
         serializer.is_valid()
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(data=serializer.data, status=status.HTTP_200_OK)
 
     @extend_schema(summary='Adiciona nova categoria', examples=[
         OpenApiExample('Exemplo de uso',
@@ -49,17 +50,17 @@ class CategoriaView(APIView):
         Api para adicionar categoria
         """
         try:
-            categoria = CategoriaFactory.fromDict(request.data)
+            categoria = UseCaseCategoria.criarCategoria(
+                repository_categoria=CategoriaDaoOrm, categoria=CategoriaFactory.fromDict(request.data))
         except Exception as erro:
             return Response({'status': 'erro', 'detalhes': erro.__str__()}, status=status.HTTP_400_BAD_REQUEST)
-
-        serializer = CategoriaSerializer(data=request.data)
-        if not serializer.is_valid():
-            return Response({'status': 'erro', 'detalhes': serializer._errors}, status=status.HTTP_400_BAD_REQUEST)
-
+        
+        serializer = CategoriaSerializer(data=categoria.toDict())
         try:
-            serializer.save()
+            if not serializer.is_valid():
+                return Response({'status': 'erro', 'detalhes': serializer._errors}, status=status.HTTP_400_BAD_REQUEST)
+            
         except Exception as erro:
             return Response({'status': 'erro', 'detalhes': 'Não foi possível cadastrar a nova categoria.'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(data=categoria.toDict(), status=status.HTTP_201_CREATED)

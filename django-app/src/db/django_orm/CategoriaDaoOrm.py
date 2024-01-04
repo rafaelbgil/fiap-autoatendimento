@@ -5,9 +5,11 @@ from api.models import Categoria as CategoriaModel
 
 
 class CategoriaDaoOrm(CategoriaDaoInterface):
-    def getCategoria(self, id: str) -> Categoria:
+    @staticmethod
+    def getCategoria(id: str) -> Categoria:
         if not id.isnumeric():
-            raise Exception('Código de categoria inválido, favor informar um número.')
+            raise Exception(
+                'Código de categoria inválido, favor informar um número.')
         try:
             categoria_queryset = CategoriaModel.objects.get(id=id)
         except:
@@ -15,6 +17,7 @@ class CategoriaDaoOrm(CategoriaDaoInterface):
 
         return CategoriaFactory.fromDict(categoria_queryset.__dict__)
 
+    @staticmethod
     def listCategoria() -> list[Categoria]:
         categorias_queryset = CategoriaModel.objects.all()
         categorias = []
@@ -24,24 +27,27 @@ class CategoriaDaoOrm(CategoriaDaoInterface):
 
         return categorias
 
-    def deleteCategoria(self, id: int):
+    @staticmethod
+    def deleteCategoria(id: int):
         try:
             categoria_queryset = CategoriaModel.objects.get(id=id)
             categoria_queryset.delete()
         except:
-            raise Exception('Categoria não foi encontrada ou não pode ser removida. Verifique o código informado.')
+            raise Exception(
+                'Categoria não foi encontrada ou não pode ser removida. Verifique o código informado.')
         return True
 
-    def addCategoria(self, categoria: Categoria):
+    @staticmethod
+    def addCategoria(categoria: Categoria) -> Categoria:
         categoria_orm = CategoriaModel()
         for atributo in categoria.__dict__.keys():
             if categoria.__dict__[atributo] and categoria.__dict__[atributo] != 'None':
                 categoria_orm.__setattr__(
-                    __name=atributo, __value=categoria.__dict__[atributo])
+                    atributo, categoria.__dict__[atributo])
         try:
             categoria_orm.save()
-        except:
-            raise Exception('Não foi possível adicionar a categoria.')
+        except Exception as error:
+            raise Exception('Não foi possível adicionar a categoria. %s' % (error.__str__()))
 
         categoria.id = categoria_orm.id
         return categoria
