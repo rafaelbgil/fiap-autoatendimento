@@ -22,7 +22,6 @@ class ProdutoView(APIView):
         produtos = UseCaseProduto.obterListaProduto(
             repository_produto=ProdutoDaoOrm)
         serializer = ProdutoSerializer(instance=produtos, many=True)
-        # serializer.is_valid()
         return Response(serializer.data)
 
     @extend_schema(summary='Adiciona novo produto')

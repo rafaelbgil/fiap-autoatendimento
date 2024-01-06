@@ -7,7 +7,7 @@ class ProdutoDaoInterface(ABC):
         pass
 
     @abstractmethod
-    def listProdutoByCategoria() -> list[Produto]:
+    def listProdutoByCategoria(categoria_nome: str) -> list[Produto]:
         pass
     
     @abstractmethod

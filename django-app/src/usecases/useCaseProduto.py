@@ -7,6 +7,10 @@ class UseCaseProduto:
         return repository_produto.listProduto()
     
     @staticmethod
+    def obterListaProdutoPorCategoria(repository_produto: ProdutoDaoInterface, categoria_nome: str) -> list[Produto]:
+        return repository_produto.listProdutoByCategoria(categoria_nome=categoria_nome)
+    
+    @staticmethod
     def obterProduto(repository_produto: ProdutoDaoInterface, id: int) -> Produto:
         return repository_produto.getProduto(id=id)
     

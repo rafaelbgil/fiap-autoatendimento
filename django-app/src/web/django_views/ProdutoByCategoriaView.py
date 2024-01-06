@@ -1,5 +1,6 @@
-from src.entities.ProdutoFactory import ProdutoFactory
 from src.db.django_orm.ProdutoDaoOrm import ProdutoDaoOrm
+from src.usecases.useCaseProduto import UseCaseProduto
+
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -20,7 +21,7 @@ class ProdutoByCategoriaView(APIView):
         Api para obter lista de produtos por categoria
         """
         try:
-            lista_produtos = ProdutoDaoOrm().listProdutoByCategoria(categoria_nome=categoria)
+            lista_produtos = UseCaseProduto.obterListaProdutoPorCategoria(repository_produto=ProdutoDaoOrm, categoria_nome=categoria)
         except Exception as erro:
             return Response(data={'status': 'erro', 'descricao': erro.__str__()}, status=status.HTTP_404_NOT_FOUND)
         
