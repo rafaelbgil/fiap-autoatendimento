@@ -1,4 +1,6 @@
 from src.db.django_orm.ClienteDaoOrm import ClienteDaoOrm
+from src.usecases.UseCaseCliente import UseCaseCliente
+
 from rest_framework.views import APIView
 from api.serializers import ClienteSerializer
 from rest_framework.response import Response
@@ -22,7 +24,7 @@ class ClienteDetalhesView(APIView):
         Api para visualizar dados de usuario selecionado
         """
         try:
-            cliente = ClienteDaoOrm().getCliente(uuid=uuid)
+            cliente = UseCaseCliente.obterCliente(repository_cliente=ClienteDaoOrm, uuid=uuid)
         except Exception as erro:
             return Response(data={'status': 'erro', 'detalhes': erro.__str__()}, status=status.HTTP_400_BAD_REQUEST)
        
@@ -38,7 +40,7 @@ class ClienteDetalhesView(APIView):
         Api para remover cliente selecionado
         """
         try:
-            cliente = ClienteDaoOrm().deleteCliente(uuid=uuid)
+            UseCaseCliente.removerCliente(repository_cliente=ClienteDaoOrm, uuid=uuid)
         except:
             return Response(data={'status': 'erro', 'descricao': 'Não foi possível localizar o usuário informado pelo UUID para realizar a remoção.'}, status=status.HTTP_404_NOT_FOUND)
 

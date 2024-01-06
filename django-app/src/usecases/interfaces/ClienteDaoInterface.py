@@ -3,17 +3,17 @@ from src.entities.Cliente import Cliente
 
 class ClienteDaoInterface(ABC):
     @abstractmethod
-    def getCliente(self, uuid: str) -> Cliente:
+    def getCliente(uuid: str) -> Cliente:
         pass
     
     @abstractmethod
-    def deleteCliente(self, uuid: str):
+    def deleteCliente(uuid: str) -> bool:
         pass
 
     @abstractmethod
-    def listCliente(self) -> list[Cliente]:
+    def listCliente() -> list[Cliente]:
         pass
 
     @abstractmethod
-    def addCliente(self, cliente: Cliente):
+    def addCliente(cliente: Cliente):
         pass

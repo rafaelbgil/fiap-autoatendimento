@@ -3,15 +3,15 @@ from src.entities.Categoria import Categoria
 
 class CategoriaDaoInterface(ABC):
     @staticmethod
-    def getCategoria(self, id: int) -> Categoria:
+    def getCategoria(id: int) -> Categoria:
         pass
 
     @staticmethod
-    def deleteCategoria(self, id: int) -> bool:
+    def deleteCategoria(id: int) -> bool:
         pass
 
     @staticmethod
-    def addCategoria(self, categoria: Categoria):
+    def addCategoria(categoria: Categoria):
         pass
 
     @staticmethod 

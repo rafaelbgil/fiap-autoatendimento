@@ -37,7 +37,7 @@ class CategoriaDetalhesView(APIView):
         Remove categoria selecionada
         """
         try:
-            CategoriaDaoOrm().deleteCategoria(id)
+            UseCaseCategoria.removerCategoria(repository_categoria=CategoriaDaoOrm, id=id)
             return Response(data={'status': 'sucesso', 'detalhes': 'Categoria removida com sucesso.'}, status=status.HTTP_200_OK)
         except Exception as erro:
             return Response(data={'status': 'erro', 'descricao': erro.__str__()}, status=status.HTTP_400_BAD_REQUEST)

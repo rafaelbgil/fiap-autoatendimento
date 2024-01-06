@@ -6,15 +6,17 @@ from src.usecases.interfaces.ClienteDaoInterface import ClienteDaoInterface
 
 
 class ClienteDaoOrm(ClienteDaoInterface):
-    def getCliente(self, uuid: str) -> Cliente:
+    @staticmethod
+    def getCliente(uuid: str) -> Cliente:
         client_uuid_validado = _validarUuid(uuid=uuid)
         try:
             cliente = ClienteModel.objects.get(uuid=client_uuid_validado)
         except:
             raise Exception('Cliente não encontrado.')
         return ClienteFactory.fromDict(dicionario_cliente=cliente.__dict__, validar_campos=False)
-
-    def listCliente(self) -> list[Cliente]:
+    
+    @staticmethod
+    def listCliente() -> list[Cliente]:
         clientes_queryset = ClienteModel.objects.all()
         clientes = []
         for cliente in clientes_queryset.iterator():
@@ -22,14 +24,16 @@ class ClienteDaoOrm(ClienteDaoInterface):
                 dicionario_cliente=cliente.__dict__, validar_campos=False))
         return clientes
 
-    def deleteCliente(self, uuid: str) -> bool:
+    @staticmethod
+    def deleteCliente(uuid: str) -> bool:
         try:
             ClienteModel.objects.get(uuid=uuid).delete()
         except:
             raise Exception('Não foi possível remover o cliente informado, verifique se o uuid informado está correto.')
         return True
-
-    def addCliente(self, cliente: Cliente):
+    
+    @staticmethod
+    def addCliente(cliente: Cliente):
         cliente_orm = ClienteModel()
         for atributo in cliente.__dict__.keys():
             if cliente.__dict__[atributo] and cliente.__dict__[atributo] != 'None':
