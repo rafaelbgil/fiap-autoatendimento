@@ -7,7 +7,8 @@ from src.entities.Produto import Produto
 
 
 class ProdutoDaoOrm(ProdutoDaoInterface):
-    def getProduto(self, id: str) -> Produto:
+    @staticmethod
+    def getProduto(id: str) -> Produto:
         try:
             produto_orm = ProdutoModel.objects.get(id=int(id))
         except:
@@ -20,7 +21,8 @@ class ProdutoDaoOrm(ProdutoDaoInterface):
 
         return produto
     
-    def listProduto(self) -> [Produto]:
+    @staticmethod
+    def listProduto() -> list[Produto]:
         produtos_queryset = ProdutoModel.objects.all()      
         lista_produtos = []
 
@@ -34,7 +36,8 @@ class ProdutoDaoOrm(ProdutoDaoInterface):
         
         return lista_produtos
     
-    def listProdutoByCategoria(self, categoria_nome: str) -> [Produto]:
+    @staticmethod
+    def listProdutoByCategoria(categoria_nome: str) -> list[Produto]:
         try:
             categoria_orm = CategoriaModel.objects.get(nome__iexact=categoria_nome)
         except:
@@ -47,7 +50,8 @@ class ProdutoDaoOrm(ProdutoDaoInterface):
 
         return lista_produtos
 
-    def addProduto(self, produto: Produto):
+    @staticmethod
+    def addProduto(produto: Produto) -> Produto:
         categoria = None
         if produto.id_categoria:
             try:
@@ -74,7 +78,8 @@ class ProdutoDaoOrm(ProdutoDaoInterface):
 
         return produto
     
-    def deleteProduto(self, id: str):
+    @staticmethod
+    def deleteProduto(id: str) -> bool:
         try: 
             produto = ProdutoModel.objects.get(id=int(id))
         except:
@@ -87,7 +92,8 @@ class ProdutoDaoOrm(ProdutoDaoInterface):
         
         return True
     
-    def updateProduto(self, produto: Produto, id: str) -> Produto:
+    @staticmethod
+    def updateProduto(produto: Produto, id: str) -> Produto:
         categoria = None
         if produto.id_categoria:
             categoria = CategoriaModel.objects.get(id=int(produto.id_categoria))

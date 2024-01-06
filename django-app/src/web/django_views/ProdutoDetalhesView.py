@@ -1,5 +1,7 @@
 from src.entities.ProdutoFactory import ProdutoFactory
 from src.db.django_orm.ProdutoDaoOrm import ProdutoDaoOrm
+from src.usecases.useCaseProduto import UseCaseProduto
+
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -13,7 +15,7 @@ class ProdutoDetalhesView(APIView):
     """
     serializer_class = ProdutoSerializer
 
-    @extend_schema(summary='Obtém dados de produto selecionado' , responses={
+    @extend_schema(summary='Obtém dados de produto selecionado', responses={
         200: OpenApiResponse(description='Json Response'),
         400: OpenApiResponse(description='Validation error')
     })
@@ -22,7 +24,8 @@ class ProdutoDetalhesView(APIView):
         Api para visualizar dados de produto selecionado
         """
         try:
-            produto = ProdutoDaoOrm().getProduto(id)
+            produto = UseCaseProduto.obterProduto(
+                repository_produto=ProdutoDaoOrm, id=id)
         except Exception as erro:
             return Response(data={'status': 'erro', 'descricao': erro.__str__()}, status=status.HTTP_404_NOT_FOUND)
         serializer = ProdutoSerializer(instance=produto)
@@ -34,8 +37,8 @@ class ProdutoDetalhesView(APIView):
         Api para atualizar produto selecionado
         """
         try:
-            produto_atualizado = ProdutoDaoOrm().updateProduto(
-                id=id, produto=ProdutoFactory.fromDict(request.data, update=True))
+            produto_atualizado = UseCaseProduto.atualizarProduto(
+                repository_produto=ProdutoDaoOrm, produto=ProdutoFactory.fromDict(request.data, update=True), id=id)
         except Exception as erro:
             return Response(data={'status': 'erro', 'descricao': erro.__str__()})
         return Response(produto_atualizado.toDict())
@@ -46,7 +49,8 @@ class ProdutoDetalhesView(APIView):
         Api para remover produto selecionado
         """
         try:
-            ProdutoDaoOrm().deleteProduto(id)
+            UseCaseProduto.removerProduto(repository_produto=ProdutoDaoOrm, id=id)
+            #ProdutoDaoOrm().deleteProduto(id)
         except Exception as erro:
             return Response(data={'status': 'erro', 'descricao': erro.__str__()}, status=status.HTTP_404_NOT_FOUND)
         return Response(status=status.HTTP_200_OK)

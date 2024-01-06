@@ -3,7 +3,7 @@ from src.entities.Produto import Produto
 
 class ProdutoDaoInterface(ABC):
     @abstractmethod
-    def getProduto(self, id : int) -> Produto:
+    def getProduto(id : int) -> Produto:
         pass
 
     @abstractmethod
@@ -11,18 +11,18 @@ class ProdutoDaoInterface(ABC):
         pass
     
     @abstractmethod
-    def listProduto(self)-> [Produto]:
+    def listProduto()-> list[Produto]:
         pass
 
     @abstractmethod
-    def deleteProduto(self, id: int):
+    def deleteProduto(id: int) -> bool:
         pass
 
     @abstractmethod
-    def addProduto(self, produto: Produto) -> bool:
+    def addProduto(produto: Produto) -> Produto:
         pass
 
     @abstractmethod
-    def updateProduto(self, produto: Produto) -> Produto:
+    def updateProduto(produto: Produto, id: str) -> Produto:
         pass
     
