@@ -1,4 +1,3 @@
-from .Produto import Produto
 from abc import ABC
 
 

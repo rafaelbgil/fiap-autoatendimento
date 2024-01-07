@@ -50,7 +50,6 @@ class ProdutoDetalhesView(APIView):
         """
         try:
             UseCaseProduto.removerProduto(repository_produto=ProdutoDaoOrm, id=id)
-            #ProdutoDaoOrm().deleteProduto(id)
         except Exception as erro:
             return Response(data={'status': 'erro', 'descricao': erro.__str__()}, status=status.HTTP_404_NOT_FOUND)
         return Response(status=status.HTTP_200_OK)
