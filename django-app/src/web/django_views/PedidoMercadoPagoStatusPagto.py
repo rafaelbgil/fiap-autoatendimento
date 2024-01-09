@@ -9,9 +9,9 @@ from rest_framework import status
 from drf_spectacular.utils import extend_schema, OpenApiExample
 
 
-class PedidoDetalhesView(APIView):
+class PedidoMercadoPagoStatusPagtoView(APIView):
     """
-    Api para obter informacoes do pedido selecionado
+    Api para atualizar status de pagamento via webhook mercadopago
     """
     serializer_class = PedidoSerializer
 
@@ -39,7 +39,7 @@ class PedidoDetalhesView(APIView):
                                       response_only=True,
                                       )
                    ])
-    def get(self, request, id, format=None):
+    def post(self, request, id, format=None):
         """
         Obtém informacao de **pedido** selecionado
         """

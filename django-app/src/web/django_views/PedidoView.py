@@ -1,6 +1,6 @@
 from src.db.django_orm.PedidoRepositoryOrm import PedidoRepositoryOrm
 from src.usecases.UseCasePedido import UseCasePedido
-from src.controllers.FormatPedido import FormatPedido
+from src.presenters.FormatPedido import FormatPedido
 
 from api.serializers import PedidoSerializer
 from rest_framework.views import APIView

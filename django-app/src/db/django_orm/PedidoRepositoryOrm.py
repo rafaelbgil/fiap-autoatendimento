@@ -3,7 +3,6 @@ from src.entities.Pedido import Pedido
 from src.entities.PedidoFactory import PedidoFactory
 from src.entities.ItemPedidoFactory import ItemPedidoFactory
 from src.entities.TypeCpf import Cpf
-from src.controllers.FormatPedido import FormatPedido
 from api.models import Pedido as PedidoModel
 from api.models import ItemPedido as ItemPedidoModel
 from api.models import Produto as ProdutoModel
@@ -94,3 +93,14 @@ class PedidoRepositoryOrm(PedidoRepositoryInterface):
             raise Exception('Nao foi possivel localizar o pedido com id %s.' % (id))
 
         return PedidoRepositoryOrm.pedidoOrmToPedido(pedido_orm=pedido_orm)        
+
+    @staticmethod
+    def updateStatus(pedido: Pedido, status: str) -> Pedido:
+        pedido.atualizarStatusPedido(status=status)
+        pedido_orm = PedidoModel.objects.get(id=pedido.numero)
+        pedido_orm.status = pedido.status
+        pedido_orm.save()
+        return pedido
+        
+
+        

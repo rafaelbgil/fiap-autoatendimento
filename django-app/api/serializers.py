@@ -45,6 +45,7 @@ class PedidoSerializer(serializers.Serializer):
     status = serializers.CharField(read_only=True)
     lista_itens = serializers.SerializerMethodField()
     
+    
 
     def get_lista_itens(self, obj):
         lista_itens = obj.itempedido_set.all()

@@ -32,11 +32,15 @@ class Pedido(models.Model):
         ('finalizado' , 'finalizado'),
         ('cancelado' , 'cancelado')
     ] 
+    
     cpf = models.CharField(max_length=11, null=True, blank=True)
     nome = models.CharField(max_length=120, null=True, blank=True)
     email = models.CharField(max_length=120, null=True, blank=True)
     valor = models.FloatField(null=False)
-    status = models.CharField(choices=status_choice, default='aguardando_pagamento', max_length=40 )
+    status = models.CharField(choices=status_choice, default='aguardando_pagamento', max_length=40)
+    fornecedor_meio_pagto = models.CharField(default='mercadopago', max_length=40)
+    pix_cod = models.CharField(max_length=300, null=True, blank=True)
+    
 
     def __str__(self):
         return 'id %s valor: %s, cpf: %s' % (self.id, self.valor, self.cpf)

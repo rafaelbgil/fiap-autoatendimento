@@ -26,3 +26,9 @@ class UseCasePedido:
     
     def obterPedido(repositorio_pedido: PedidoRepositoryInterface, id: str) -> Pedido:
         return repositorio_pedido.getPedido(id=id)
+    
+    def atualizarStatusPagtoViaWebhook(repositorio_pedido: PedidoRepositoryInterface, pedido: Pedido, status_pagto: str):
+        return repositorio_pedido.updateStatusPgto(pedido=pedido, status_pgto=status_pagto)
+    
+    def atualizarStatusPedido(repositorio_pedido: PedidoRepositoryInterface, pedido: Pedido, status: str)-> Pedido:
+        return repositorio_pedido.updateStatus(pedido=pedido, status=status)

@@ -16,3 +16,35 @@ class Pedido(ABC):
         self.lista_itens = lista_itens
         self.valor = float(valor)
         self.id = id
+
+    def atualizarStatusPedido(self, status: str):
+        if self.status == 'cancelado' or self.status == 'finalizado':
+            raise Exception('Pedidos com status cancelado ou finalizado nao podem ser alterados')
+
+        if (self.status == 'aguardando_pagamento'):
+            if (status == 'recebido' or status == 'cancelado'):
+                self.status = status
+                return
+            else:
+                raise Exception('Pedidos com status aguardando_pagamento so podem ser alterados para cancelado ou recebido')           
+        
+        if (self.status == 'recebido'):
+            if (status == 'preparando' or status == 'cancelado'):
+                self.status = status
+                return
+            else:
+                raise Exception('Pedidos com status recebido so podem ser alterados para cancelado ou preparando')     
+        
+        if (self.status == 'preparando'):
+            if (status == 'pronto' or status == 'cancelado'):
+                self.status = status
+                return
+            else:
+                raise Exception('Pedidos com status preparando so podem ser alterados para cancelado ou pronto')
+    
+        if (self.status == 'pronto'):
+            if (status == 'finalizado' or status == 'cancelado'):
+                self.status = status
+                return
+            else:
+                raise Exception('Pedidos com status preparando so podem ser alterados para cancelado ou pronto')
