@@ -2,7 +2,10 @@ from src.usecases.interfaces.PedidoRepositoryInterface import PedidoRepositoryIn
 from src.entities.Pedido import Pedido
 from src.entities.PedidoFactory import PedidoFactory
 from src.entities.ItemPedidoFactory import ItemPedidoFactory
+from src.entities.Cobranca import Cobranca
+from src.entities.CategoriaFactory import CategoriaFactory
 from src.entities.TypeCpf import Cpf
+
 from api.models import Pedido as PedidoModel
 from api.models import ItemPedido as ItemPedidoModel
 from api.models import Produto as ProdutoModel

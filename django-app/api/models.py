@@ -38,8 +38,6 @@ class Pedido(models.Model):
     email = models.CharField(max_length=120, null=True, blank=True)
     valor = models.FloatField(null=False)
     status = models.CharField(choices=status_choice, default='aguardando_pagamento', max_length=40)
-    fornecedor_meio_pagto = models.CharField(default='mercadopago', max_length=40)
-    pix_cod = models.CharField(max_length=300, null=True, blank=True)
     
 
     def __str__(self):
@@ -53,3 +51,16 @@ class ItemPedido(models.Model):
     categoria = models.CharField(max_length=40, null=True, blank=True)
     quantidade = models.PositiveIntegerField(null=False)
     pedido = models.ForeignKey(to=Pedido, on_delete=models.CASCADE, null=False)
+
+class Cobranca(models.Model):
+    status_choice = [
+        ('pendente' , 'pendente'),
+        ('cancelado' , 'cancelado'),
+        ('recebido' , 'recebido')
+    ]
+    codigo = models.UUIDField(default=uuid.uuid4, editable=False)
+    pedido = models.ForeignKey(to=Pedido, on_delete=models.CASCADE, null=False) 
+    status = models.CharField(choices=status_choice, default='pendente', max_length=40)
+    fornecedor_meio_pagto = models.CharField(default='mercadopago', max_length=40)
+    pix_codigo = models.CharField(max_length=300, null=True, blank=True)
+    
