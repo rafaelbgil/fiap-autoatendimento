@@ -1,6 +1,5 @@
 from src.entities.Pedido import Pedido
 from src.entities.ItemPedido import ItemPedido
-from src.entities.ProdutoFactory import ProdutoFactory
 from src.entities.ItemPedidoFactory import ItemPedidoFactory
 from src.entities.TypeCpf import _validate_cpf
 

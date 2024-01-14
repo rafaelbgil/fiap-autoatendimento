@@ -58,9 +58,12 @@ class Cobranca(models.Model):
         ('cancelado' , 'cancelado'),
         ('recebido' , 'recebido')
     ]
-    codigo = models.UUIDField(default=uuid.uuid4, editable=False)
+    codigo = models.UUIDField(default=uuid.uuid4)
+    valor = models.FloatField(null=False)
     pedido = models.ForeignKey(to=Pedido, on_delete=models.CASCADE, null=False) 
     status = models.CharField(choices=status_choice, default='pendente', max_length=40)
     fornecedor_meio_pagto = models.CharField(default='mercadopago', max_length=40)
     pix_codigo = models.CharField(max_length=300, null=True, blank=True)
     
+    def __str__(self):
+        return 'pedido: %s status: %s valor: %s' % (self.pedido.id, self.status, self.valor)

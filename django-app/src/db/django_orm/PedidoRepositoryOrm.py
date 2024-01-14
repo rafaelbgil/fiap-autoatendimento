@@ -3,6 +3,7 @@ from src.entities.Pedido import Pedido
 from src.entities.PedidoFactory import PedidoFactory
 from src.entities.ItemPedidoFactory import ItemPedidoFactory
 from src.entities.Cobranca import Cobranca
+from src.entities.CobrancaFactory import CobrancaFactory
 from src.entities.CategoriaFactory import CategoriaFactory
 from src.entities.TypeCpf import Cpf
 
@@ -23,7 +24,7 @@ class PedidoRepositoryOrm(PedidoRepositoryInterface):
         for pedido_orm in pedidos_queryset:
             pedido = PedidoRepositoryOrm.pedidoOrmToPedido(pedido_orm)
             lista_pedidos.append(pedido)
-        
+
         return lista_pedidos
 
     @staticmethod
@@ -32,14 +33,21 @@ class PedidoRepositoryOrm(PedidoRepositoryInterface):
         lista_itens = []
         for item in lista_itens_orm:
             lista_itens.append(item.__dict__)
-            
+
         pedido_dict = pedido_orm.__dict__
         pedido_dict['numero'] = pedido_orm.id
         pedido_dict['lista_itens'] = lista_itens
 
         pedido = PedidoFactory.fromDict(
-                dicionario_pedido=pedido_dict)
-            
+            dicionario_pedido=pedido_dict)
+
+        if pedido_orm.cobranca_set.exists():
+            cobranca_orm = pedido_orm.cobranca_set.get()
+            cobranca = CobrancaFactory.createCobranca(
+                valor=cobranca_orm.valor, fornecedor_meio_pagto=cobranca_orm.fornecedor_meio_pagto, codigo=cobranca_orm.codigo, status=cobranca_orm.status, pix_codigo=cobranca_orm.pix_codigo)
+
+            pedido.cobranca = cobranca       
+
         return pedido
 
     @staticmethod
@@ -57,22 +65,24 @@ class PedidoRepositoryOrm(PedidoRepositoryInterface):
             except:
                 raise Exception(
                     'Nao foi possivel localizar o item com id %s.' % (item['id']))
-            item_pedido = ItemPedidoFactory.fromDict(dicionario_item=produto_model.__dict__)
+            item_pedido = ItemPedidoFactory.fromDict(
+                dicionario_item=produto_model.__dict__)
             item_pedido.quantidade = item['quantidade']
-            valor_total = valor_total + (item['quantidade'] * item_pedido.preco)
+            valor_total = valor_total + \
+                (item['quantidade'] * item_pedido.preco)
             lista_itens.append(item_pedido)
 
         if 'cpf' in dicionario_pedido:
             cpf = Cpf(cpf=dicionario_pedido['cpf'])
-        
+
         pedido_orm = PedidoModel()
         pedido_orm.cpf = cpf
         pedido_orm.valor = valor_total
         try:
             pedido_orm.save()
         except:
-            raise(Exception)
-        
+            raise (Exception)
+
         for item_da_lista in lista_itens:
             item_pedido_orm = ItemPedidoModel()
             item_pedido_orm.pedido = pedido_orm
@@ -84,8 +94,8 @@ class PedidoRepositoryOrm(PedidoRepositoryInterface):
             try:
                 item_pedido_orm.save()
             except:
-                raise(Exception)
-            
+                raise (Exception)
+
         return pedido_orm
 
     @staticmethod
@@ -93,9 +103,10 @@ class PedidoRepositoryOrm(PedidoRepositoryInterface):
         try:
             pedido_orm = PedidoModel.objects.get(id=id)
         except:
-            raise Exception('Nao foi possivel localizar o pedido com id %s.' % (id))
+            raise Exception(
+                'Nao foi possivel localizar o pedido com id %s.' % (id))
 
-        return PedidoRepositoryOrm.pedidoOrmToPedido(pedido_orm=pedido_orm)        
+        return PedidoRepositoryOrm.pedidoOrmToPedido(pedido_orm=pedido_orm)
 
     @staticmethod
     def updateStatus(pedido: Pedido, status: str) -> Pedido:
@@ -104,6 +115,3 @@ class PedidoRepositoryOrm(PedidoRepositoryInterface):
         pedido_orm.status = pedido.status
         pedido_orm.save()
         return pedido
-        
-
-        

@@ -1,5 +1,5 @@
 from abc import ABC
-
+from .Cobranca import Cobranca
 
 class Pedido(ABC):
     id: int | None
@@ -9,13 +9,14 @@ class Pedido(ABC):
     lista_itens: list | None
     valor: float
 
-    def __init__(self, numero: int, valor: float, status: str = 'aguardando_pagamento', lista_itens: list | None = None, cpf: str | None = None, id: int = None):
+    def __init__(self, numero: int, valor: float, status: str = 'aguardando_pagamento', lista_itens: list | None = None, cpf: str | None = None, id: int = None, cobranca: Cobranca = None):
         self.numero = numero
         self.status = status
         self.cpf = cpf
         self.lista_itens = lista_itens
         self.valor = float(valor)
         self.id = id
+        self.cobranca = cobranca
 
     def atualizarStatusPedido(self, status: str):
         if self.status == 'cancelado' or self.status == 'finalizado':

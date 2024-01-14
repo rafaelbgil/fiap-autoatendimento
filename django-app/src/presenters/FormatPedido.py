@@ -26,6 +26,8 @@ class FormatPedido:
             del (pedido_dict['lista_itens'])
             pedido_dict['lista_itens'] = lista_itens
 
+        if pedido.cobranca:
+            pedido_dict['cobranca'] = pedido.cobranca.__dict__
         return pedido_dict
 
     def fromListPedidoToDict(lista_pedidos: [Pedido]) -> list[dict]:

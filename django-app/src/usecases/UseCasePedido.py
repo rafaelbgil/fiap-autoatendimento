@@ -7,6 +7,7 @@ class UseCasePedido:
         lista_pedidos_prontos = []
         lista_pedidos_preparando = []
         lista_pedidos_entregues = []
+        lista_pedidos_aguardando_pagamento = []
         
         for pedido_selecionado in lista_pedidos:
             if pedido_selecionado.status == 'preparando':
@@ -15,8 +16,10 @@ class UseCasePedido:
                 lista_pedidos_prontos.append(pedido_selecionado)
             if pedido_selecionado.status == 'recebido':
                 lista_pedidos_entregues.append(pedido_selecionado)
+            if pedido_selecionado.status == 'aguardando_pagamento':
+                lista_pedidos_aguardando_pagamento.append(pedido_selecionado)
 
-        lista_pedidos_ordenada = lista_pedidos_prontos + lista_pedidos_preparando + lista_pedidos_entregues
+        lista_pedidos_ordenada = lista_pedidos_prontos + lista_pedidos_preparando + lista_pedidos_entregues + lista_pedidos_aguardando_pagamento
 
         return lista_pedidos_ordenada
 
