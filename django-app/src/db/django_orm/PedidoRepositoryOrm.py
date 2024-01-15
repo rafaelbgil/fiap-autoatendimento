@@ -12,7 +12,6 @@ from src.entities.TypeCpf import Cpf
 
 from src.external.mercadopago.cobranca import CobrancaMercadoPago
 
-
 from api.models import Pedido as PedidoModel
 from api.models import ItemPedido as ItemPedidoModel
 from api.models import Produto as ProdutoModel
@@ -111,13 +110,14 @@ class PedidoRepositoryOrm(PedidoRepositoryInterface):
                 if environ.get('WEBHOOK_DOMAIN'):
                     WEBHOOK_DOMAIN = environ.get('WEBHOOK_DOMAIN')
 
-                URL_WEBHOOK = WEBHOOK_DOMAIN + '/' + uuid_cobranca.__str__()    
+                URL_WEBHOOK = WEBHOOK_DOMAIN + '/api/pedido/mercadopago/' + uuid_cobranca.__str__()    
                 
                 cobranca_mercadopago = CobrancaMercadoPago(token=environ.get('MERCADOPAGO_TOKEN'))
                 retorno_cobranca_mercadopago = cobranca_mercadopago.criarCobranca('pagamento lanchonete fiap', valor=pedido_orm.valor, url_webhook=URL_WEBHOOK)
                 
                 cobranca_orm = CobrancaModel()
                 cobranca_orm.pix_codigo = retorno_cobranca_mercadopago.json()['point_of_interaction']['transaction_data']['qr_code']
+                print('webhook url: %s' % retorno_cobranca_mercadopago.json()['notification_url'])
                 print('Pagamento url: %s' % retorno_cobranca_mercadopago.json()['point_of_interaction']['transaction_data']['ticket_url'])
                 cobranca_orm.pedido = pedido_orm
                 cobranca_orm.valor = pedido_orm.valor
@@ -143,3 +143,24 @@ class PedidoRepositoryOrm(PedidoRepositoryInterface):
         pedido_orm.status = pedido.status
         pedido_orm.save()
         return pedido
+
+    @staticmethod
+    def updateStatusByWebhook(uuid_cobranca: str, dicionario_cobranca: dict) -> bool:
+        try:
+            cobranca_orm = CobrancaModel.objects.get(codigo=uuid_cobranca)
+            if dicionario_cobranca['status'] == 'pending':
+                return True
+            if dicionario_cobranca['status'] == 'approved' or dicionario_cobranca['status'] == 'authorized' :
+                cobranca_orm.pedido.status = 'recebido'
+                cobranca_orm.status = 'recebido'
+                cobranca_orm.pedido.save()
+                cobranca_orm.save()
+                return True
+            if dicionario_cobranca['status'] == 'cancelled' or dicionario_cobranca['status'] == 'rejected':
+                cobranca_orm.pedido.status = 'cancelado'
+                cobranca_orm.status = 'cancelado'
+                cobranca_orm.pedido.save()
+                cobranca_orm.save()
+                return True
+        except:
+            raise Exception('Cobranca invalida %s.' % (uuid_cobranca))
