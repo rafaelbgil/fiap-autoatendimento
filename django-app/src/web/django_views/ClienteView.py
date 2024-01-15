@@ -2,6 +2,8 @@ from src.entities.ClienteFactory import ClienteFactory
 from src.db.django_orm.ClienteDaoOrm import ClienteDaoOrm
 from src.usecases.UseCaseCliente import UseCaseCliente
 
+from src.presenters.FormatCliente import FormatCliente
+
 from rest_framework.views import APIView
 from api.serializers import ClienteSerializer
 from rest_framework.response import Response
@@ -56,4 +58,4 @@ class ClienteView(APIView):
                 repository_cliente=ClienteDaoOrm, cliente=ClienteFactory.fromDict(request.data))
         except Exception as erro:
             return Response(data={'status': 'erro', 'detalhes': erro.__str__()}, status=status.HTTP_400_BAD_REQUEST)
-        return Response(cliente.toDict(), status=status.HTTP_201_CREATED)
+        return Response(FormatCliente.fromClienteToDict(cliente=cliente), status=status.HTTP_201_CREATED)

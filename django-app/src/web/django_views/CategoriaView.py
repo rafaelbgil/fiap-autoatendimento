@@ -2,6 +2,8 @@ from src.entities.CategoriaFactory import CategoriaFactory
 from src.db.django_orm.CategoriaDaoOrm import CategoriaDaoOrm
 from src.usecases.UseCaseCategoria import UseCaseCategoria
 
+from src.presenters.FormatCategoria import FormatCategoria
+
 from rest_framework.views import APIView
 from api.serializers import CategoriaSerializer
 from rest_framework.response import Response
@@ -55,7 +57,7 @@ class CategoriaView(APIView):
         except Exception as erro:
             return Response({'status': 'erro', 'detalhes': erro.__str__()}, status=status.HTTP_400_BAD_REQUEST)
         
-        serializer = CategoriaSerializer(data=categoria.toDict())
+        serializer = CategoriaSerializer(data=FormatCategoria.fromCategoriaToDict(categoria=categoria))
         try:
             if not serializer.is_valid():
                 return Response({'status': 'erro', 'detalhes': serializer._errors}, status=status.HTTP_400_BAD_REQUEST)
@@ -63,4 +65,4 @@ class CategoriaView(APIView):
         except Exception as erro:
             return Response({'status': 'erro', 'detalhes': 'Não foi possível cadastrar a nova categoria.'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-        return Response(data=categoria.toDict(), status=status.HTTP_201_CREATED)
+        return Response(data=FormatCategoria.fromCategoriaToDict(categoria=categoria), status=status.HTTP_201_CREATED)

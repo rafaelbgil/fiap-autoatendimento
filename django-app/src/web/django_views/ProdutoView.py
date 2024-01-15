@@ -2,6 +2,8 @@ from src.entities.ProdutoFactory import ProdutoFactory
 from src.db.django_orm.ProdutoDaoOrm import ProdutoDaoOrm
 from src.usecases.useCaseProduto import UseCaseProduto
 
+from src.presenters.FormatProduto import FormatProduto
+
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -34,4 +36,4 @@ class ProdutoView(APIView):
                 repository_produto=ProdutoDaoOrm, produto=ProdutoFactory.fromDict(dicionario_produto=request.data))
         except Exception as erro:
             return Response(data={'status': 'erro', 'detalhes': erro.__str__()}, status=status.HTTP_400_BAD_REQUEST)
-        return Response(produto.toDict(), status=status.HTTP_201_CREATED)
+        return Response(FormatProduto.fromProdutoToDict(produto), status=status.HTTP_201_CREATED)

@@ -14,12 +14,3 @@ class Produto:
         self.id_categoria = id_categoria
         self.imagem_url = imagem_url
 
-    def toDict(self):
-        return({
-            'id' : self.id,
-            'nome' : self.nome,
-            'preco' : self.preco,
-            'id_categoria' : self.id_categoria,
-            'descricao' : self.descricao,
-            'imagem_url' : self.imagem_url,
-        })

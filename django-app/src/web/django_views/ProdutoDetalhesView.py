@@ -2,6 +2,8 @@ from src.entities.ProdutoFactory import ProdutoFactory
 from src.db.django_orm.ProdutoDaoOrm import ProdutoDaoOrm
 from src.usecases.useCaseProduto import UseCaseProduto
 
+from src.presenters.FormatProduto import FormatProduto
+
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -41,7 +43,7 @@ class ProdutoDetalhesView(APIView):
                 repository_produto=ProdutoDaoOrm, produto=ProdutoFactory.fromDict(request.data, update=True), id=id)
         except Exception as erro:
             return Response(data={'status': 'erro', 'descricao': erro.__str__()})
-        return Response(produto_atualizado.toDict())
+        return Response(FormatProduto.fromProdutoToDict(produto_atualizado))
 
     @extend_schema(summary='Remove produto selecionado')
     def delete(self, request, id: str, format=None):

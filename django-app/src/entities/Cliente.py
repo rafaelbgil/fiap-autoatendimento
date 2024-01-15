@@ -14,10 +14,4 @@ class Cliente():
     def setUuid(self, uuid):
         self.uuid = uuid.__str__().replace('-', '')
 
-    def toDict(self):
-        return ({
-            'uuid': self.uuid,
-            'nome': self.nome,
-            'email': self.email,
-            'cpf' : self.cpf
-        })
+
