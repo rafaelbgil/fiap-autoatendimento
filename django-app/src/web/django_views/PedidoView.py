@@ -74,5 +74,5 @@ class PedidoView(APIView):
         """
         pedido = PedidoRepositoryOrm.addPedidoFromDict(
             dicionario_pedido=request.data)
-        serializer = PedidoSerializer(instance=pedido)
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        pedido_dict = FormatPedido.fromPedidoToDict(pedido)
+        return Response(data=pedido_dict, status=status.HTTP_201_CREATED)

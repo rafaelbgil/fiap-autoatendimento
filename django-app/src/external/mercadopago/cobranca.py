@@ -9,9 +9,7 @@ class CobrancaMercadoPago:
         self.token = token
 
     def criarCobranca(self, descricao: str, valor: float, url_webhook: str):
-        email_comprador = 'teste_uste_831946404@testuser.com'
-        if 'MP_EMAIL_COMPRADOR' in environ:
-            email_comprador = environ['MP_EMAIL_COMPRADOR']
+        email_comprador = environ.get('MERCADOPAGO_EMAIL')
         
         data_vencimento = datetime.datetime.now() + datetime.timedelta(minutes=15)
         data_vencimento_mercadopago = str(data_vencimento.year) + '-' + str(data_vencimento.strftime('%m')) + '-' + \

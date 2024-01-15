@@ -1,3 +1,6 @@
+from os import environ
+from uuid import uuid4
+
 from src.usecases.interfaces.PedidoRepositoryInterface import PedidoRepositoryInterface
 from src.entities.Pedido import Pedido
 from src.entities.PedidoFactory import PedidoFactory
@@ -7,9 +10,13 @@ from src.entities.CobrancaFactory import CobrancaFactory
 from src.entities.CategoriaFactory import CategoriaFactory
 from src.entities.TypeCpf import Cpf
 
+from src.external.mercadopago.cobranca import CobrancaMercadoPago
+
+
 from api.models import Pedido as PedidoModel
 from api.models import ItemPedido as ItemPedidoModel
 from api.models import Produto as ProdutoModel
+from api.models import Cobranca as CobrancaModel
 
 
 class PedidoRepositoryOrm(PedidoRepositoryInterface):
@@ -51,7 +58,7 @@ class PedidoRepositoryOrm(PedidoRepositoryInterface):
         return pedido
 
     @staticmethod
-    def addPedidoFromDict(dicionario_pedido: dict) -> dict:
+    def addPedidoFromDict(dicionario_pedido: dict) -> Pedido:
         if not 'lista_itens' in dicionario_pedido:
             raise Exception('A lista de itens não pode ser vazia.')
 
@@ -95,8 +102,29 @@ class PedidoRepositoryOrm(PedidoRepositoryInterface):
                 item_pedido_orm.save()
             except:
                 raise (Exception)
+        
+        if environ.get('MERCADOPAGO_EMAIL') and environ.get('MERCADOPAGO_TOKEN'):
+            print('passou pelo mercadopago')
+            try:
+                uuid_cobranca = uuid4()
+                WEBHOOK_DOMAIN = 'https://teste.com.br'
+                if environ.get('WEBHOOK_DOMAIN'):
+                    WEBHOOK_DOMAIN = environ.get('WEBHOOK_DOMAIN')
 
-        return pedido_orm
+                URL_WEBHOOK = WEBHOOK_DOMAIN + '/' + uuid_cobranca.__str__()    
+                
+                cobranca_mercadopago = CobrancaMercadoPago(token=environ.get('MERCADOPAGO_TOKEN'))
+                retorno_cobranca_mercadopago = cobranca_mercadopago.criarCobranca('pagamento lanchonete fiap', valor=pedido_orm.valor, url_webhook=URL_WEBHOOK)
+                
+                cobranca_orm = CobrancaModel()
+                cobranca_orm.pix_codigo = retorno_cobranca_mercadopago.json()['point_of_interaction']['transaction_data']['qr_code']
+                print('Pagamento url: %s' % retorno_cobranca_mercadopago.json()['point_of_interaction']['transaction_data']['ticket_url'])
+                cobranca_orm.pedido = pedido_orm
+                cobranca_orm.valor = pedido_orm.valor
+                cobranca_orm.save()
+            except Exception as erro:
+                raise(erro)
+        return PedidoRepositoryOrm.pedidoOrmToPedido(pedido_orm=pedido_orm)
 
     @staticmethod
     def getPedido(id: int) -> Pedido:

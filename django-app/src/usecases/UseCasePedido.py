@@ -24,7 +24,7 @@ class UseCasePedido:
         return lista_pedidos_ordenada
 
     
-    def criarPedidoFromDict(repositorio_pedido: PedidoRepositoryInterface, dicionario_pedido: dict) -> dict:
+    def criarPedidoFromDict(repositorio_pedido: PedidoRepositoryInterface, dicionario_pedido: dict) -> Pedido:
         return repositorio_pedido.addPedidoFromDict(dicionario_pedido=dicionario_pedido)
     
     def obterPedido(repositorio_pedido: PedidoRepositoryInterface, id: str) -> Pedido:
