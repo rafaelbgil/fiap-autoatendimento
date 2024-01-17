@@ -7,3 +7,4 @@ api/migrations/*
 api/migrations
 django-app/api/migrations/
 mysql-data/*
+django-app/static/*
