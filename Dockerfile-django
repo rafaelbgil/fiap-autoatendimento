@@ -6,7 +6,7 @@ WORKDIR /app
 COPY django-app /app
 COPY docker-auxiliar-files/settings.py /app/autoatendimento/
 
-RUN apk add --no-cache gcc python3 python3-dev linux-headers musl-dev pcre-dev py3-mysqlclient mariadb-dev py3-pip && pip3 install --no-cache-dir -r requirements.txt 
+RUN apk add --no-cache gcc python3 python3-dev linux-headers musl-dev pcre-dev py3-mysqlclient mariadb-dev py3-pip tzdata && pip3 install --no-cache-dir -r requirements.txt 
 RUN python manage.py collectstatic --noinput --no-post-process
 
 EXPOSE 8000

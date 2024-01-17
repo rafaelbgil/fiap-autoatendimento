@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: app-autoatendimento
+  name: app-autoatendimento
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app-autoatendimento
+  template:
+    metadata:
+      labels:
+        app: app-autoatendimento
+    spec:
+      containers:
+        - image: rafaelbgil/fiap-pos-tech:v10
+          name: fiap-pos-tech
+          env:
+            - name: DATABASE_HOST
+              value: banco-service
+            - name: DATABASE_PORT
+              value: "3306"
+            - name: DATABASE_NAME
+              value: FIAP-LANCHONETE
+            - name: DATABASE_USER
+              value: fiap-user
+            - name: DATABASE_PASSWORD
+              value: fiap-password
+          ports:
+            - containerPort: 8000
+
+        - name: proxy-reverso
+          image: nginx
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - name: nginx-app-conf
+              mountPath: /etc/nginx/nginx.conf
+              subPath: nginx.conf
+
+      volumes:
+        - name: nginx-app-conf
+          configMap:
+            name: nginx-app-conf
