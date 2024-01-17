@@ -12,4 +12,4 @@ RUN python manage.py collectstatic --noinput --no-post-process
 EXPOSE 8000
 
 
-CMD ["sh" , "start.sh"]
+CMD ["uwsgi", "--ini", "uwsgi.ini"]
