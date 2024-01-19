@@ -18,7 +18,7 @@ No miro há os seguintes elementos:
 - Event Storming com os eventos
 - Event Storming com a definição dos agredados
 
-## Execução do composer
+## Execução no composer
 
 ``` $ git clone https://github.com/rafaelbgil/fiap-autoatendimento.git ```
 
@@ -28,7 +28,16 @@ No miro há os seguintes elementos:
 
 ``` $ docker-compose up ```
 
+## Execução no Kubernetes
+``` $ git clone https://github.com/rafaelbgil/fiap-autoatendimento.git ```
 
+``` $ cd fiap-autoatendimento ```
+
+``` $ kubectl apply -f k8s ```
+
+**Para executar migrations do banco e carga de dados execute:**
+
+``` kubectl exec deploy/app-autoatendimento -c fiap-pos-tech -- /bin/sh /app/carregar_dados.sh ```
 ## URLS úteis:
 swagger : http://127.0.0.1:8000/api/swagger
 

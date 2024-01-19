@@ -15,7 +15,7 @@ spec:
         app: app-autoatendimento
     spec:
       containers:
-        - image: rafaelbgil/fiap-pos-tech:v10
+        - image: rafaelbgil/fiap-pos-tech:v11
           name: fiap-pos-tech
           env:
             - name: DATABASE_HOST
@@ -30,15 +30,37 @@ spec:
               value: fiap-password
           ports:
             - containerPort: 8000
+          resources:
+            requests:
+              cpu: 400m        
+              
+          livenessProbe:
+            httpGet:
+              path: '/admin/login/?next=/admin/'
+              port: 8000
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            failureThreshold: 30
 
         - name: proxy-reverso
-          image: nginx
+          image: rafaelbgil/fiap-pos-tech-proxy:v1
           ports:
             - containerPort: 8080
+          resources:
+            requests:
+              cpu: 400m   
+           
           volumeMounts:
             - name: nginx-app-conf
               mountPath: /etc/nginx/nginx.conf
               subPath: nginx.conf
+          livenessProbe:
+            httpGet:
+              path: '/static/drf_spectacular_sidecar/swagger-ui-dist/swagger-ui-bundle.js'
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            failureThreshold: 30
 
       volumes:
         - name: nginx-app-conf

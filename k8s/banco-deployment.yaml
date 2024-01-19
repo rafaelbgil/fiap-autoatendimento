@@ -28,3 +28,11 @@ spec:
               value: FIAP-LANCHONETE
             - name: MARIADB_ROOT_PASSWORD
               value: fiap-password
+#          volumeMounts:
+#            - mountPath: /var/lib/mysql
+#              name: mysql-dados
+#      volumes:
+#        - name: mysql-dados
+#          nfs:
+#            server: 192.168.0.1
+#            path: /mysql-dados

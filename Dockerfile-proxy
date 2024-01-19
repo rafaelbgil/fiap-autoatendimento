@@ -1,0 +1,6 @@
+#imagem base
+FROM nginx
+
+#workdir
+WORKDIR /app
+COPY django-app /app

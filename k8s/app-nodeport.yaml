@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: app-autoatendimento
+  name: app-nodeport
+  namespace: autoatendimento
+spec:
+  ports:
+  - name: port-http
+    nodePort: 30555
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: app-autoatendimento
+  sessionAffinity: None
+  type: NodePort
