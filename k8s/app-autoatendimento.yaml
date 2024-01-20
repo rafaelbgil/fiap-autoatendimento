@@ -28,6 +28,11 @@ spec:
               value: fiap-user
             - name: DATABASE_PASSWORD
               value: fiap-password
+            #Para integracao com mercadopago descomentar as variavies abaixo
+            #- name: MERCADOPAGO_TOKEN
+            #  value: token_vendedor
+            #- name: MERCADOPAGO_EMAIL
+            #  value: email_comprador
           ports:
             - containerPort: 8000
           resources:
