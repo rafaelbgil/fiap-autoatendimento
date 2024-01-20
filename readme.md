@@ -35,6 +35,10 @@ No miro há os seguintes elementos:
 
 ``` $ kubectl apply -f k8s ```
 
+## Arquitetura da solução
+![arquitetura](https://github.com/rafaelbgil/fiap-autoatendimento/assets/13522522/858798ca-af3a-455d-8ce1-9b69f38fe226)
+
+
 **Para executar migrations do banco e carga de dados execute:**
 
 ``` kubectl exec deploy/app-autoatendimento -c fiap-pos-tech -- /bin/sh /app/carregar_dados.sh ```
