@@ -33,6 +33,8 @@ spec:
             #  value: token_vendedor
             #- name: MERCADOPAGO_EMAIL
             #  value: email_comprador
+            #- WEBHOOK_DOMAIN:
+            # value: 'https://teste.com.br'
           ports:
             - containerPort: 8000
           resources:
