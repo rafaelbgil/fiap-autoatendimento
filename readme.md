@@ -35,23 +35,25 @@ No miro há os seguintes elementos:
 
 ``` $ kubectl apply -f k8s ```
 
-## Arquitetura da solução
-![arquitetura](https://github.com/rafaelbgil/fiap-autoatendimento/assets/13522522/858798ca-af3a-455d-8ce1-9b69f38fe226)
 
 
 **Para executar migrations do banco e carga de dados execute:**
 
 ``` kubectl exec deploy/app-autoatendimento -c fiap-pos-tech -- /bin/sh /app/carregar_dados.sh ```
+
+## Arquitetura da solução
+![arquitetura](https://github.com/rafaelbgil/fiap-autoatendimento/assets/13522522/858798ca-af3a-455d-8ce1-9b69f38fe226)
+
 ## URLS úteis:
 swagger : http://127.0.0.1:8000/api/swagger
 
 redoc: http://127.0.0.1:8000/api/redoc
 
 ## URLS das apis:
-http://127.0.0.1:8000/api/cliente 
+http://127.0.0.1:30555/api/cliente 
 
-http://127.0.0.1:8000/api/categoria
+http://127.0.0.1:30555/api/categoria
 
-http://127.0.0.1:8000/api/produto
+http://127.0.0.1:30555/api/produto
 
-http://127.0.0.1:8000/api/pedido
+http://127.0.0.1:30555/api/pedido
