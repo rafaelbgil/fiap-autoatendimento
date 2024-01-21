@@ -42,12 +42,13 @@ No miro há os seguintes elementos:
 ``` kubectl exec deploy/app-autoatendimento -c fiap-pos-tech -- /bin/sh /app/carregar_dados.sh ```
 
 ## Arquitetura da solução
-![arquitetura](https://github.com/rafaelbgil/fiap-autoatendimento/assets/13522522/858798ca-af3a-455d-8ce1-9b69f38fe226)
+![arquitetura](https://github.com/rafaelbgil/fiap-autoatendimento/assets/13522522/ec957ea0-8f1e-4acd-93bc-907e953f2a8b)
+
 
 ## URLS úteis:
-swagger : http://127.0.0.1:8000/api/swagger
+swagger : http://127.0.0.1:30555/api/swagger
 
-redoc: http://127.0.0.1:8000/api/redoc
+redoc: http://127.0.0.1:30555/api/redoc
 
 ## URLS das apis:
 http://127.0.0.1:30555/api/cliente 
